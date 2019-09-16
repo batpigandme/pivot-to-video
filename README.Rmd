@@ -36,7 +36,7 @@ dt <- tibble::tribble(
   )
 
 dt %>%
-  gt::gt(rowname_col = "fun") %>%
+  gt::gt() %>%
   tab_header(
     title = md("__Functions used in this section__")
   ) %>%
@@ -45,7 +45,9 @@ dt %>%
     fn = function(x) {
       sprintf("<a href=%s>docs</a>", x)
     }
-  )
+  ) %>%
+  fmt_markdown(columns = vars(fun)) %>%
+  cols_label(fun = "")
 
 ```
 
