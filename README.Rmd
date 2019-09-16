@@ -20,7 +20,116 @@ vignette](https://tidyr.tidyverse.org/articles/pivot.html)!
 But, I *will* be using some nifty TV- / movie-related data. So, I'm sticking
 with the name.
 
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(gt)
+```
+
+
 ## `r emo::ji("burger")` Bob's Burgers: A Belcher Family survey
+
+```{r funs-section, echo=FALSE}
+dt <- tibble::tribble(
+               ~fun,                                                                                                                         ~definition,                                                      ~link,
+  "`tidyr::separate_rows()`", "If a variable contains observations with multiple delimited values, this separates the values and places each one in its own row.", "https://tidyr.tidyverse.org/reference/separate_rows.html",
+    "`tidyr::pivot_wider()`",                                              "\"Widens\" data, increasing the number of columns and decreasing the number of rows.",   "https://tidyr.tidyverse.org/reference/pivot_wider.html"
+  )
+
+dt %>%
+  gt::gt(rowname_col = "fun") %>%
+  tab_header(
+    title = md("__Functions used in this section__")
+  ) %>%
+  text_transform(
+    locations = cells_data(vars("link")),
+    fn = function(x) {
+      sprintf("<a href=%s>docs</a>", x)
+    }
+  )
+
+```
+
+<br />
+
+```{r message=FALSE, warning=FALSE}
+library(googlesheets4)
+library(googledrive)
+```
+
+```{r message=FALSE, warning=FALSE}
+sheet <- googlesheets::gs_url("https://docs.google.com/spreadsheets/d/16F7E_3s2UYXt__qq5N1GtxVbMR8BvPpU7L_WE9enszg/edit#gid=2018729513")
+
+bobs_ws <- googlesheets::gs_ws_ls(sheet)
+```
+
+```{r}
+raw_dat <- sheet %>% 
+  googlesheets::gs_read(ws = glue::glue("{bobs_ws}"))
+```
+
+
+```{r prelim-results}
+results <- tibble::rowid_to_column(raw_dat, "resp_id") %>%
+  dplyr::rename("response" = `Members of the Belcher family with whom I identify (select all that apply)`) %>%
+  dplyr::select(-Timestamp)
+```
+
+Because I used a [Google Form](https://docs.google.com/forms/d/e/1FAIpQLScYLAkzDzEOWvXrn601Vt79S6DsKLkv12NUsqbo72j1fmapWA/viewform) to collect this data, I don't have to worry about
+order of names, since they come out the same every time.
+
+```{r agg-results}
+agg_results <- results %>%
+  dplyr::group_by(response) %>%
+  dplyr::summarise(total = n()) %>%
+  dplyr::arrange(desc(total))
+
+agg_results
+```
+
+Let's make them long with
+[`tidyr::separate_rows()`](https://tidyr.tidyverse.org/dev/reference/separate_rows.html).
+I'm also adding a numeric variable, `identify` (short for "character(s) with
+whom I identify"), and ensuring that respondent IDs don't get erroneously
+treated as numeric, by converting them to characters.
+
+```{r results-prep}
+results <- results %>%
+  tidyr::separate_rows(response) %>%
+  dplyr::mutate(identify = 1,
+                resp_id = as.character(resp_id))
+
+head(results)
+```
+
+
+Now we'll take one of the "new" tidyr verbs for a spin, [`pivot_wider()`](https://tidyr.tidyverse.org/dev/reference/pivot_wider.html). 
+Rather than fill things out with a bunch of `NA`s, we'll prepare our data 
+to use with the `UpSetR` package by turning it into binaries, and ditch the 
+respondent ID in the end.
+
+I *highly* recommend Paul Campbell's
+[code-through](https://www.cultureofinsight.com/blog/2018/01/25/2018-01-25-visualising-twitter-follower-overlap/)
+using UpSetR, which gave me (among other things) the pro tip that `upset()` does
+*not* like tibbles (hence the `as.data.frame()` at the end).
+
+```{r}
+binary_tib <- results %>%
+  tidyr::pivot_wider(
+    names_from = response,
+    values_from = identify,
+    values_fill = list(identify = 0)
+  ) %>%
+  dplyr::select(-resp_id)
+
+binary_df <- as.data.frame(binary_tib)
+```
+
+```{r basic-upset}
+UpSetR::upset(binary_df, nsets = 5, order.by = "freq")
+```
+
+
+
 
 
 
