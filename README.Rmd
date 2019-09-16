@@ -1,0 +1,26 @@
+---
+author: Mara Averick
+date: '`r format(Sys.Date())`'
+title: Pivot to Video
+output:
+  html_document:
+    keep_md: true
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.path = 'fig/', dev = 'png', dpi = 144, fig.retina = 2)
+```
+
+`r emo::ji("television")` OK, not _really_! 
+
+This is actually about `tidyr::pivot_*()` functions, which you can learn all
+about in the new tidyr version 1.0.0 [Pivoting
+vignette](https://tidyr.tidyverse.org/articles/pivot.html)! 
+
+But, I *will* be using some nifty TV- / movie-related data. So, I'm sticking
+with the name.
+
+## `r emo::ji("burger")` Bob's Burgers: A Belcher Family survey
+
+
+
