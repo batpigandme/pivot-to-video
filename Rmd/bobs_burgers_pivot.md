@@ -30,7 +30,7 @@ library(tidyverse)
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#hrnfyvapyg .gt_table {
+#ibjocsrraw .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -55,13 +55,13 @@ library(tidyverse)
   /* table.border.bottom.color */
 }
 
-#hrnfyvapyg .gt_heading {
+#ibjocsrraw .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#hrnfyvapyg .gt_title {
+#ibjocsrraw .gt_title {
   color: #333333;
   font-size: 125%;
   /* heading.title.font.size */
@@ -72,7 +72,7 @@ library(tidyverse)
   border-bottom-width: 0;
 }
 
-#hrnfyvapyg .gt_subtitle {
+#ibjocsrraw .gt_subtitle {
   color: #333333;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -83,7 +83,7 @@ library(tidyverse)
   border-top-width: 0;
 }
 
-#hrnfyvapyg .gt_bottom_border {
+#ibjocsrraw .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -92,7 +92,7 @@ library(tidyverse)
   /* heading.border.bottom.color */
 }
 
-#hrnfyvapyg .gt_column_spanner {
+#ibjocsrraw .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -100,7 +100,7 @@ library(tidyverse)
   padding-bottom: 4px;
 }
 
-#hrnfyvapyg .gt_col_heading {
+#ibjocsrraw .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -114,23 +114,23 @@ library(tidyverse)
   overflow-x: hidden;
 }
 
-#hrnfyvapyg .gt_columns_top_border {
+#ibjocsrraw .gt_columns_top_border {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
 }
 
-#hrnfyvapyg .gt_columns_bottom_border {
+#ibjocsrraw .gt_columns_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#hrnfyvapyg .gt_sep_right {
+#ibjocsrraw .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#hrnfyvapyg .gt_group_heading {
+#ibjocsrraw .gt_group_heading {
   padding: 8px;
   /* row_group.padding */
   color: #333333;
@@ -155,7 +155,7 @@ library(tidyverse)
   vertical-align: middle;
 }
 
-#hrnfyvapyg .gt_empty_group_heading {
+#ibjocsrraw .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -179,19 +179,19 @@ library(tidyverse)
   vertical-align: middle;
 }
 
-#hrnfyvapyg .gt_striped {
+#ibjocsrraw .gt_striped {
   background-color: #8080800D;
 }
 
-#hrnfyvapyg .gt_from_md > :first-child {
+#ibjocsrraw .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#hrnfyvapyg .gt_from_md > :last-child {
+#ibjocsrraw .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#hrnfyvapyg .gt_row {
+#ibjocsrraw .gt_row {
   padding: 8px;
   /* row.padding */
   margin: 10px;
@@ -202,14 +202,14 @@ library(tidyverse)
   overflow-x: hidden;
 }
 
-#hrnfyvapyg .gt_stub {
+#ibjocsrraw .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #D3D3D3;
   padding-left: 12px;
 }
 
-#hrnfyvapyg .gt_summary_row {
+#ibjocsrraw .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   /* summary_row.background.color */
@@ -219,7 +219,7 @@ library(tidyverse)
   /* summary_row.text_transform */
 }
 
-#hrnfyvapyg .gt_grand_summary_row {
+#ibjocsrraw .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   /* grand_summary_row.background.color */
@@ -229,19 +229,19 @@ library(tidyverse)
   /* grand_summary_row.text_transform */
 }
 
-#hrnfyvapyg .gt_first_summary_row {
+#ibjocsrraw .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
 }
 
-#hrnfyvapyg .gt_first_grand_summary_row {
+#ibjocsrraw .gt_first_grand_summary_row {
   border-top-style: double;
   border-top-width: 6px;
   border-top-color: #D3D3D3;
 }
 
-#hrnfyvapyg .gt_table_body {
+#ibjocsrraw .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -256,7 +256,7 @@ library(tidyverse)
   /* table_body.border.bottom.color */
 }
 
-#hrnfyvapyg .gt_footnotes {
+#ibjocsrraw .gt_footnotes {
   border-top-style: solid;
   /* footnotes.border.top.style */
   border-top-width: 2px;
@@ -265,7 +265,7 @@ library(tidyverse)
   /* footnotes.border.top.color */
 }
 
-#hrnfyvapyg .gt_footnote {
+#ibjocsrraw .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   margin: 0px;
@@ -273,7 +273,7 @@ library(tidyverse)
   /* footnote.padding */
 }
 
-#hrnfyvapyg .gt_sourcenotes {
+#ibjocsrraw .gt_sourcenotes {
   border-top-style: solid;
   /* sourcenotes.border.top.style */
   border-top-width: 2px;
@@ -282,48 +282,48 @@ library(tidyverse)
   /* sourcenotes.border.top.color */
 }
 
-#hrnfyvapyg .gt_sourcenote {
+#ibjocsrraw .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#hrnfyvapyg .gt_center {
+#ibjocsrraw .gt_center {
   text-align: center;
 }
 
-#hrnfyvapyg .gt_left {
+#ibjocsrraw .gt_left {
   text-align: left;
 }
 
-#hrnfyvapyg .gt_right {
+#ibjocsrraw .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#hrnfyvapyg .gt_font_normal {
+#ibjocsrraw .gt_font_normal {
   font-weight: normal;
 }
 
-#hrnfyvapyg .gt_font_bold {
+#ibjocsrraw .gt_font_bold {
   font-weight: bold;
 }
 
-#hrnfyvapyg .gt_font_italic {
+#ibjocsrraw .gt_font_italic {
   font-style: italic;
 }
 
-#hrnfyvapyg .gt_super {
+#ibjocsrraw .gt_super {
   font-size: 65%;
 }
 
-#hrnfyvapyg .gt_footnote_marks {
+#ibjocsrraw .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="hrnfyvapyg" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="ibjocsrraw" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead>
     <tr>
       <th colspan="3" class="gt_heading gt_title gt_font_normal gt_center gt_bottom_border" style><strong>Functions used in this section</strong></th>
@@ -363,7 +363,7 @@ library(googledrive)
 
 
 ```r
-sheet <- googlesheets::gs_url("https://docs.google.com/spreadsheets/d/16F7E_3s2UYXt__qq5N1GtxVbMR8BvPpU7L_WE9enszg/edit#gid=2018729513")
+sheet <- googlesheets::gs_title("bobs_burgers_survey_results")
 
 bobs_ws <- googlesheets::gs_ws_ls(sheet)
 ```

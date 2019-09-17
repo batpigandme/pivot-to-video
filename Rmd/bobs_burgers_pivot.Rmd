@@ -59,7 +59,7 @@ library(googledrive)
 ```
 
 ```{r message=FALSE, warning=FALSE}
-sheet <- googlesheets::gs_url("https://docs.google.com/spreadsheets/d/16F7E_3s2UYXt__qq5N1GtxVbMR8BvPpU7L_WE9enszg/edit#gid=2018729513")
+sheet <- googlesheets::gs_title("bobs_burgers_survey_results")
 
 bobs_ws <- googlesheets::gs_ws_ls(sheet)
 ```
