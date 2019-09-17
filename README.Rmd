@@ -27,39 +27,8 @@ library(tidyverse)
 
 ## `r emo::ji("burger")` Bob's Burgers: A Belcher Family survey
 
-```{r funs-section, echo=FALSE}
-library(gt)
-dt <- tibble::tribble(
-               ~fun,                                                                                                                         ~definition,                                                      ~link,
-  "`tidyr::separate_rows()`", "If a variable contains observations with multiple delimited values, this separates the values and places each one in its own row.", "https://tidyr.tidyverse.org/reference/separate_rows.html",
-    "`tidyr::pivot_wider()`",                                              "\"Widens\" data, increasing the number of columns and decreasing the number of rows.",   "https://tidyr.tidyverse.org/reference/pivot_wider.html"
-  )
-
-dt %>%
-  gt::gt() %>%
-  tab_header(
-    title = md("__Functions used in this section__")
-  ) %>%
-  text_transform(
-    locations = cells_data(vars("link")),
-    fn = function(x) {
-      sprintf("<a href=%s>docs</a>", x)
-    }
-  ) %>%
-  fmt_markdown(columns = vars(fun)) %>%
-  cols_label(fun = "")
-
-```
-
-<br />
-
 ```{r message=FALSE, warning=FALSE}
-library(googlesheets4)
-library(googledrive)
-```
-
-```{r message=FALSE, warning=FALSE}
-sheet <- googlesheets::gs_url("https://docs.google.com/spreadsheets/d/16F7E_3s2UYXt__qq5N1GtxVbMR8BvPpU7L_WE9enszg/edit#gid=2018729513")
+sheet <- googlesheets::gs_title("bobs_burgers_survey_results")
 
 bobs_ws <- googlesheets::gs_ws_ls(sheet)
 ```
