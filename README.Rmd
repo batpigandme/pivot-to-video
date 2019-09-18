@@ -1,7 +1,7 @@
 ---
 author: Mara Averick
 date: '`r format(Sys.Date())`'
-title: Pivot to Video
+title: '`r emo::ji("tv")` Pivot to Video'
 output:
   html_document:
     keep_md: true
@@ -17,7 +17,7 @@ This is actually about `tidyr::pivot_*()` functions, which you can learn all
 about in the new tidyr version 1.0.0 [Pivoting
 vignette](https://tidyr.tidyverse.org/articles/pivot.html)! 
 
-But, I *will* be using some nifty TV- / movie-related data. So, I'm sticking
+But, I *will* be using some nifty TV-related data. So, I'm sticking
 with the name.
 
 ```{r message=FALSE, warning=FALSE}
@@ -40,7 +40,7 @@ raw_dat <- sheet %>%
 
 
 ```{r prelim-results}
-results <- tibble::rowid_to_column(raw_dat, "resp_id") %>%
+belcher_results <- tibble::rowid_to_column(raw_dat, "resp_id") %>%
   dplyr::rename("response" = `Members of the Belcher family with whom I identify (select all that apply)`) %>%
   dplyr::select(-Timestamp)
 ```
@@ -49,13 +49,15 @@ Because I used a [Google Form](https://docs.google.com/forms/d/e/1FAIpQLScYLAkzD
 order of names, since they come out the same every time.
 
 ```{r agg-results}
-agg_results <- results %>%
+agg_results <- belcher_results %>%
   dplyr::group_by(response) %>%
   dplyr::summarise(total = n()) %>%
   dplyr::arrange(desc(total))
 
 agg_results
 ```
+
+### `tidyr::separate_rows()`
 
 Let's make them long with
 [`tidyr::separate_rows()`](https://tidyr.tidyverse.org/dev/reference/separate_rows.html).
@@ -64,27 +66,24 @@ whom I identify"), and ensuring that respondent IDs don't get erroneously
 treated as numeric, by converting them to characters.
 
 ```{r results-prep}
-results <- results %>%
+belcher_results <- belcher_results %>%
   tidyr::separate_rows(response) %>%
   dplyr::mutate(identify = 1,
                 resp_id = as.character(resp_id))
 
-head(results)
+head(belcher_results)
 ```
 
+
+### `tidyr::pivot_wider()`
 
 Now we'll take one of the "new" tidyr verbs for a spin, [`pivot_wider()`](https://tidyr.tidyverse.org/dev/reference/pivot_wider.html). 
 Rather than fill things out with a bunch of `NA`s, we'll prepare our data 
 to use with the `UpSetR` package by turning it into binaries, and ditch the 
 respondent ID in the end.
 
-I *highly* recommend Paul Campbell's
-[code-through](https://www.cultureofinsight.com/blog/2018/01/25/2018-01-25-visualising-twitter-follower-overlap/)
-using UpSetR, which gave me (among other things) the pro tip that `upset()` does
-*not* like tibbles (hence the `as.data.frame()` at the end).
-
 ```{r}
-binary_tib <- results %>%
+binary_tib <- belcher_results %>%
   tidyr::pivot_wider(
     names_from = response,
     values_from = identify,
@@ -92,6 +91,17 @@ binary_tib <- results %>%
   ) %>%
   dplyr::select(-resp_id)
 
+head(binary_tib)
+```
+
+### `UpSetR::upset()`
+
+I *highly* recommend Paul Campbell's
+[code-through](https://www.cultureofinsight.com/blog/2018/01/25/2018-01-25-visualising-twitter-follower-overlap/)
+using [UpSetR](https://github.com/hms-dbmi/UpSetR), which gave me (among other things) the pro tip that `upset()` does
+*not* like tibbles (hence the `as.data.frame()` at the end).
+
+```{r}
 binary_df <- as.data.frame(binary_tib)
 ```
 
@@ -99,8 +109,48 @@ binary_df <- as.data.frame(binary_tib)
 UpSetR::upset(binary_df, nsets = 5, order.by = "freq")
 ```
 
+## `r emo::ji("movie")` I have seen this movie...
+
+Let's take a look at another dataset I collected with a quick survey, this one asking people whether they had or had not seen a given movie.
+
+```{r sheet-chunk-2}
+sheet <- googlesheets::gs_title("seen_this_movie")
+
+movie_ws <- googlesheets::gs_ws_ls(sheet)
+
+raw_dat <- sheet %>% 
+  googlesheets::gs_read(ws = glue::glue("{movie_ws}"))
+```
+
+First I'll use [`tibble::rowid_to_column()`](https://tibble.tidyverse.org/reference/rownames.html) to keep track of which user said what (and, again, make sure those are stored as characters rather than numeric, so I don't accidentally analyze it the wrong way).
+
+I still don't care about the timestamp, so I'll get everything _but_ that using `dplyr::select(-Timestamp)`.
+
+The variable names here have a whole bunch of annoying characters (e.g. spaces, exclamation points). So, I'm going to use Sam Firke's [janitor](https://sfirke.github.io/janitor/) package — specifically the  [`janitor::clean_names()`](https://sfirke.github.io/janitor/reference/clean_names.html) function — to take care of some of the grunt work for me there.
+
+```{r wide-movie-results}
+movie_results <- tibble::rowid_to_column(raw_dat, "resp_id") %>%
+  dplyr::mutate(resp_id = as.character(resp_id)) %>%
+  dplyr::select(-Timestamp) %>%
+  janitor::clean_names()
+
+head(movie_results)
+```
+
+Since this dataset is wide, let's also take a gander at it using `glimpse()`:
+
+```{r glimpse-wide-movies}
+glimpse(movie_results)
+```
 
 
 
+---
+<!--
+```{r}
+devtools::session_info()
+```
+
+-->
 
 
