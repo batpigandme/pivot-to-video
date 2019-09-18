@@ -221,12 +221,15 @@ I still don't care about the timestamp, so I'll get everything _but_ that using 
 
 The variable names here have a whole bunch of annoying characters (e.g. spaces, exclamation points). So, I'm going to use Sam Firke's [janitor](https://sfirke.github.io/janitor/) package — specifically the  [`janitor::clean_names()`](https://sfirke.github.io/janitor/reference/clean_names.html) function — to take care of some of the grunt work for me there.
 
+I'm also going to rename `my_age_is` to `age`, just because it's annoying.
+
 
 ```r
 movie_results <- tibble::rowid_to_column(raw_dat, "resp_id") %>%
   dplyr::mutate(resp_id = as.character(resp_id)) %>%
   dplyr::select(-Timestamp) %>%
-  janitor::clean_names()
+  janitor::clean_names() %>%
+  dplyr::rename("age" = my_age_is)
 
 head(movie_results)
 ```
@@ -243,7 +246,7 @@ head(movie_results)
 ## 6 6       FALSE    TRUE      FALSE        TRUE             TRUE            
 ## # … with 8 more variables: borat <lgl>, bridesmaids <lgl>,
 ## #   office_space <lgl>, old_school <lgl>, this_is_spinal_tap <lgl>,
-## #   tommy_boy <lgl>, superbad <lgl>, my_age_is <dbl>
+## #   tommy_boy <lgl>, superbad <lgl>, age <dbl>
 ```
 
 Since this dataset is wide, let's also take a gander at it using `glimpse()`:
@@ -269,9 +272,121 @@ glimpse(movie_results)
 ## $ this_is_spinal_tap <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALS…
 ## $ tommy_boy          <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FAL…
 ## $ superbad           <lgl> TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, TRUE, …
-## $ my_age_is          <dbl> 48, 31, 30, 20, 29, 28, 24, 42, 33, 34, 33, 3…
+## $ age                <dbl> 48, 31, 30, 20, 29, 28, 24, 42, 33, 34, 33, 3…
 ```
 
+### `tidyr::pivot_longer()`
+
+Since I only want to elongate the movies, and all of those columns are logical, I'll first select which columns I want by using `select_if()` and `is.logical()` as the predicate function.
+
+
+```r
+logicols <- select_if(movie_results, is.logical) %>%
+  colnames()
+
+movie_long <- movie_results %>%
+  pivot_longer(
+    cols = one_of(logicols),
+    names_to = "movie",
+    values_to = "seen"
+  )
+
+head(movie_long)
+```
+
+```
+## # A tibble: 6 x 4
+##   resp_id   age movie              seen 
+##   <chr>   <dbl> <chr>              <lgl>
+## 1 1          48 airplane           TRUE 
+## 2 1          48 anchorman          TRUE 
+## 3 1          48 animal_house       TRUE 
+## 4 1          48 the_big_lebowski   FALSE
+## 5 1          48 the_blues_brothers TRUE 
+## 6 1          48 borat              FALSE
+```
+Aside: A nice little trick for recoding `TRUE`/`FALSE` as `0` and `1`, just use `as.numeric()`.
+
+
+```r
+movie_long %>%
+  mutate(seen_num = as.numeric(seen))
+```
+
+```
+## # A tibble: 1,704 x 5
+##    resp_id   age movie              seen  seen_num
+##    <chr>   <dbl> <chr>              <lgl>    <dbl>
+##  1 1          48 airplane           TRUE         1
+##  2 1          48 anchorman          TRUE         1
+##  3 1          48 animal_house       TRUE         1
+##  4 1          48 the_big_lebowski   FALSE        0
+##  5 1          48 the_blues_brothers TRUE         1
+##  6 1          48 borat              FALSE        0
+##  7 1          48 bridesmaids        TRUE         1
+##  8 1          48 office_space       FALSE        0
+##  9 1          48 old_school         FALSE        0
+## 10 1          48 this_is_spinal_tap FALSE        0
+## # … with 1,694 more rows
+```
+
+
+
+Let's briefly pretend we're looking at just three movies: Bridesmaids, Anchorman, and Airplane.
+
+
+```r
+three_movies <- c("airplane", "anchorman", "bridesmaids")
+```
+
+
+```r
+movie_long %>%
+  filter(movie %in% three_movies)
+```
+
+```
+## # A tibble: 426 x 4
+##    resp_id   age movie       seen 
+##    <chr>   <dbl> <chr>       <lgl>
+##  1 1          48 airplane    TRUE 
+##  2 1          48 anchorman   TRUE 
+##  3 1          48 bridesmaids TRUE 
+##  4 2          31 airplane    FALSE
+##  5 2          31 anchorman   TRUE 
+##  6 2          31 bridesmaids TRUE 
+##  7 3          30 airplane    FALSE
+##  8 3          30 anchorman   FALSE
+##  9 3          30 bridesmaids FALSE
+## 10 4          20 airplane    FALSE
+## # … with 416 more rows
+```
+
+For the wide version, we'll add the respondent id and age to the list of variables we want to look at.
+
+```r
+vars_wanted <- c("resp_id", "age", three_movies)
+
+movie_results %>%
+  select(vars_wanted)
+```
+
+```
+## # A tibble: 142 x 5
+##    resp_id   age airplane anchorman bridesmaids
+##    <chr>   <dbl> <lgl>    <lgl>     <lgl>      
+##  1 1          48 TRUE     TRUE      TRUE       
+##  2 2          31 FALSE    TRUE      TRUE       
+##  3 3          30 FALSE    FALSE     FALSE      
+##  4 4          20 FALSE    FALSE     FALSE      
+##  5 5          29 FALSE    TRUE      TRUE       
+##  6 6          28 FALSE    TRUE      FALSE      
+##  7 7          24 TRUE     TRUE      FALSE      
+##  8 8          42 TRUE     FALSE     FALSE      
+##  9 9          33 TRUE     TRUE      TRUE       
+## 10 10         34 TRUE     TRUE      TRUE       
+## # … with 132 more rows
+```
 
 
 ---
@@ -474,7 +589,6 @@ devtools::session_info()
 ## 
 ## [1] /Library/Frameworks/R.framework/Versions/3.6/Resources/library
 ```
-
 -->
 
 

@@ -490,10 +490,12 @@ raw_dat &lt;- sheet %&gt;%
 <p>First I’ll use <a href="https://tibble.tidyverse.org/reference/rownames.html"><code>tibble::rowid_to_column()</code></a> to keep track of which user said what (and, again, make sure those are stored as characters rather than numeric, so I don’t accidentally analyze it the wrong way).</p>
 <p>I still don’t care about the timestamp, so I’ll get everything <em>but</em> that using <code>dplyr::select(-Timestamp)</code>.</p>
 <p>The variable names here have a whole bunch of annoying characters (e.g. spaces, exclamation points). So, I’m going to use Sam Firke’s <a href="https://sfirke.github.io/janitor/">janitor</a> package — specifically the <a href="https://sfirke.github.io/janitor/reference/clean_names.html"><code>janitor::clean_names()</code></a> function — to take care of some of the grunt work for me there.</p>
+<p>I’m also going to rename <code>my_age_is</code> to <code>age</code>, just because it’s annoying.</p>
 <pre class="r"><code>movie_results &lt;- tibble::rowid_to_column(raw_dat, &quot;resp_id&quot;) %&gt;%
   dplyr::mutate(resp_id = as.character(resp_id)) %&gt;%
   dplyr::select(-Timestamp) %&gt;%
-  janitor::clean_names()
+  janitor::clean_names() %&gt;%
+  dplyr::rename(&quot;age&quot; = my_age_is)
 
 head(movie_results)</code></pre>
 <pre><code>## # A tibble: 6 x 14
@@ -507,7 +509,7 @@ head(movie_results)</code></pre>
 ## 6 6       FALSE    TRUE      FALSE        TRUE             TRUE            
 ## # … with 8 more variables: borat &lt;lgl&gt;, bridesmaids &lt;lgl&gt;,
 ## #   office_space &lt;lgl&gt;, old_school &lt;lgl&gt;, this_is_spinal_tap &lt;lgl&gt;,
-## #   tommy_boy &lt;lgl&gt;, superbad &lt;lgl&gt;, my_age_is &lt;dbl&gt;</code></pre>
+## #   tommy_boy &lt;lgl&gt;, superbad &lt;lgl&gt;, age &lt;dbl&gt;</code></pre>
 <p>Since this dataset is wide, let’s also take a gander at it using <code>glimpse()</code>:</p>
 <pre class="r"><code>glimpse(movie_results)</code></pre>
 <pre><code>## Observations: 142
@@ -525,7 +527,84 @@ head(movie_results)</code></pre>
 ## $ this_is_spinal_tap &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALS…
 ## $ tommy_boy          &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FAL…
 ## $ superbad           &lt;lgl&gt; TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, TRUE, …
-## $ my_age_is          &lt;dbl&gt; 48, 31, 30, 20, 29, 28, 24, 42, 33, 34, 33, 3…</code></pre>
+## $ age                &lt;dbl&gt; 48, 31, 30, 20, 29, 28, 24, 42, 33, 34, 33, 3…</code></pre>
+<div id="tidyrpivot_longer" class="section level3">
+<h3><code>tidyr::pivot_longer()</code></h3>
+<p>Since I only want to elongate the movies, and all of those columns are logical, I’ll first select which columns I want by using <code>select_if()</code> and <code>is.logical()</code> as the predicate function.</p>
+<pre class="r"><code>logicols &lt;- select_if(movie_results, is.logical) %&gt;%
+  colnames()
+
+movie_long &lt;- movie_results %&gt;%
+  pivot_longer(
+    cols = one_of(logicols),
+    names_to = &quot;movie&quot;,
+    values_to = &quot;seen&quot;
+  )
+
+head(movie_long)</code></pre>
+<pre><code>## # A tibble: 6 x 4
+##   resp_id   age movie              seen 
+##   &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;              &lt;lgl&gt;
+## 1 1          48 airplane           TRUE 
+## 2 1          48 anchorman          TRUE 
+## 3 1          48 animal_house       TRUE 
+## 4 1          48 the_big_lebowski   FALSE
+## 5 1          48 the_blues_brothers TRUE 
+## 6 1          48 borat              FALSE</code></pre>
+<p>Aside: A nice little trick for recoding <code>TRUE</code>/<code>FALSE</code> as <code>0</code> and <code>1</code>, just use <code>as.numeric()</code>.</p>
+<pre class="r"><code>movie_long %&gt;%
+  mutate(seen_num = as.numeric(seen))</code></pre>
+<pre><code>## # A tibble: 1,704 x 5
+##    resp_id   age movie              seen  seen_num
+##    &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;              &lt;lgl&gt;    &lt;dbl&gt;
+##  1 1          48 airplane           TRUE         1
+##  2 1          48 anchorman          TRUE         1
+##  3 1          48 animal_house       TRUE         1
+##  4 1          48 the_big_lebowski   FALSE        0
+##  5 1          48 the_blues_brothers TRUE         1
+##  6 1          48 borat              FALSE        0
+##  7 1          48 bridesmaids        TRUE         1
+##  8 1          48 office_space       FALSE        0
+##  9 1          48 old_school         FALSE        0
+## 10 1          48 this_is_spinal_tap FALSE        0
+## # … with 1,694 more rows</code></pre>
+<p>Let’s briefly pretend we’re looking at just three movies: Bridesmaids, Anchorman, and Airplane.</p>
+<pre class="r"><code>three_movies &lt;- c(&quot;airplane&quot;, &quot;anchorman&quot;, &quot;bridesmaids&quot;)</code></pre>
+<pre class="r"><code>movie_long %&gt;%
+  filter(movie %in% three_movies)</code></pre>
+<pre><code>## # A tibble: 426 x 4
+##    resp_id   age movie       seen 
+##    &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;       &lt;lgl&gt;
+##  1 1          48 airplane    TRUE 
+##  2 1          48 anchorman   TRUE 
+##  3 1          48 bridesmaids TRUE 
+##  4 2          31 airplane    FALSE
+##  5 2          31 anchorman   TRUE 
+##  6 2          31 bridesmaids TRUE 
+##  7 3          30 airplane    FALSE
+##  8 3          30 anchorman   FALSE
+##  9 3          30 bridesmaids FALSE
+## 10 4          20 airplane    FALSE
+## # … with 416 more rows</code></pre>
+<p>For the wide version, we’ll add the respondent id and age to the list of variables we want to look at.</p>
+<pre class="r"><code>vars_wanted &lt;- c(&quot;resp_id&quot;, &quot;age&quot;, three_movies)
+
+movie_results %&gt;%
+  select(vars_wanted)</code></pre>
+<pre><code>## # A tibble: 142 x 5
+##    resp_id   age airplane anchorman bridesmaids
+##    &lt;chr&gt;   &lt;dbl&gt; &lt;lgl&gt;    &lt;lgl&gt;     &lt;lgl&gt;      
+##  1 1          48 TRUE     TRUE      TRUE       
+##  2 2          31 FALSE    TRUE      TRUE       
+##  3 3          30 FALSE    FALSE     FALSE      
+##  4 4          20 FALSE    FALSE     FALSE      
+##  5 5          29 FALSE    TRUE      TRUE       
+##  6 6          28 FALSE    TRUE      FALSE      
+##  7 7          24 TRUE     TRUE      FALSE      
+##  8 8          42 TRUE     FALSE     FALSE      
+##  9 9          33 TRUE     TRUE      TRUE       
+## 10 10         34 TRUE     TRUE      TRUE       
+## # … with 132 more rows</code></pre>
 <hr />
 <!--
 
@@ -726,8 +805,8 @@ devtools::session_info()
 ## 
 ## [1] /Library/Frameworks/R.framework/Versions/3.6/Resources/library
 ```
-
 -->
+</div>
 </div>
 
 

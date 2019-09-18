@@ -128,11 +128,14 @@ I still don't care about the timestamp, so I'll get everything _but_ that using 
 
 The variable names here have a whole bunch of annoying characters (e.g. spaces, exclamation points). So, I'm going to use Sam Firke's [janitor](https://sfirke.github.io/janitor/) package — specifically the  [`janitor::clean_names()`](https://sfirke.github.io/janitor/reference/clean_names.html) function — to take care of some of the grunt work for me there.
 
+I'm also going to rename `my_age_is` to `age`, just because it's annoying.
+
 ```{r wide-movie-results}
 movie_results <- tibble::rowid_to_column(raw_dat, "resp_id") %>%
   dplyr::mutate(resp_id = as.character(resp_id)) %>%
   dplyr::select(-Timestamp) %>%
-  janitor::clean_names()
+  janitor::clean_names() %>%
+  dplyr::rename("age" = my_age_is)
 
 head(movie_results)
 ```
@@ -143,6 +146,50 @@ Since this dataset is wide, let's also take a gander at it using `glimpse()`:
 glimpse(movie_results)
 ```
 
+### `tidyr::pivot_longer()`
+
+Since I only want to elongate the movies, and all of those columns are logical, I'll first select which columns I want by using `select_if()` and `is.logical()` as the predicate function.
+
+```{r}
+logicols <- select_if(movie_results, is.logical) %>%
+  colnames()
+
+movie_long <- movie_results %>%
+  pivot_longer(
+    cols = one_of(logicols),
+    names_to = "movie",
+    values_to = "seen"
+  )
+
+head(movie_long)
+```
+Aside: A nice little trick for recoding `TRUE`/`FALSE` as `0` and `1`, just use `as.numeric()`.
+
+```{r}
+movie_long %>%
+  mutate(seen_num = as.numeric(seen))
+```
+
+
+
+Let's briefly pretend we're looking at just three movies: Bridesmaids, Anchorman, and Airplane.
+
+```{r}
+three_movies <- c("airplane", "anchorman", "bridesmaids")
+```
+
+```{r}
+movie_long %>%
+  filter(movie %in% three_movies)
+```
+
+For the wide version, we'll add the respondent id and age to the list of variables we want to look at.
+```{r}
+vars_wanted <- c("resp_id", "age", three_movies)
+
+movie_results %>%
+  select(vars_wanted)
+```
 
 
 ---
@@ -150,7 +197,6 @@ glimpse(movie_results)
 ```{r}
 devtools::session_info()
 ```
-
 -->
 
 
