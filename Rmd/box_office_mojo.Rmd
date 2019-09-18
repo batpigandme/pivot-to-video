@@ -1,0 +1,22 @@
+---
+author: Mara Averick
+date: '`r format(Sys.Date())`'
+title: Box Office Mojo
+output:
+  html_document:
+    keep_md: true
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.path = 'fig/', dev = 'png', dpi = 144, fig.retina = 2)
+```
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+```
+
+```{r}
+boxofficemojo_data <- read_csv(here::here("data", "boxofficemojo_data.csv"), 
+    col_types = cols(Weekend = col_date(format = "%Y-%m-%d")))
+```
+
