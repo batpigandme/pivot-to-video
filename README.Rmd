@@ -108,51 +108,6 @@ binary_df <- as.data.frame(binary_tib)
 UpSetR::upset(binary_df, nsets = 5, order.by = "freq")
 ```
 
-### Bonus: Venn Diagram
-
-In essence, our desired output above (the UpSet plot), dictated the format of our data. If we wanted to use a Venn Diagram (for example, using the [VennDiagram](https://CRAN.R-project.org/package=VennDiagram)) package, we'd want our data in yet another format.
-
-We'll use out long data frame from before, `belcher_results`. What we want is a set of _respondents_ who identified with each character. For example, if I wanted just the respondents who chose Bob, I would do the following:
-
-```{r}
-bob <- belcher_results %>%
-  filter(response == "Bob") %>%
-  pull(resp_id)
-```
-
-I'll make a little helper function, and do the same for the rest of the family. (Yes, this could be refactored to be much more efficient, but the names of the members of the Belcher Family roll of my fingertips easily enough).
-
-```{r}
-# little brittle helper
-make_set <- function(x) {
-  belcher_results %>%
-    filter(response == x) %>%
-    pull(resp_id)
-}
-
-linda <- make_set("Linda")
-
-tina <- make_set("Tina")
-
-gene <- make_set("Gene")
-
-louise <- make_set("Louise")
-```
-
-Now I'll follow this handy [tutorial](https://www.r-graph-gallery.com/14-venn-diagramm.html) from [the R Graph Gallery](https://www.r-graph-gallery.com), and turn this into a basic Venn Diagram
-
-```{r basic-belcher-venn}
-library(VennDiagram)
-
-venn.diagram(
-  x = list(bob, linda, tina, gene, louise),
-  category.names = c("Bob", "Linda", "Tina", "Gene", "Louise"),
-  filename = "belcher_venn.png"
-)
-```
-
-![](`r here::here("belcher_venn.png")`)
-
 ## `r emo::ji("movie")` I have seen this movie...
 
 Let's take a look at another dataset I collected with a quick survey, this one asking people whether they had or had not seen a given movie.

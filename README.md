@@ -170,69 +170,7 @@ UpSetR::upset(binary_df, nsets = 5, order.by = "freq")
 
 <img src="fig/basic-upset-1.png" width="1008" />
 
-### Bonus: Venn Diagram
-
-In essence, our desired output above (the UpSet plot), dictated the format of our data. If we wanted to use a Venn Diagram (for example, using the [VennDiagram](https://CRAN.R-project.org/package=VennDiagram)) package, we'd want our data in yet another format.
-
-We'll use out long data frame from before, `belcher_results`. What we want is a set of _respondents_ who identified with each character. For example, if I wanted just the respondents who chose Bob, I would do the following:
-
-
-```r
-bob <- belcher_results %>%
-  filter(response == "Bob") %>%
-  pull(resp_id)
-```
-
-I'll make a little helper function, and do the same for the rest of the family. (Yes, this could be refactored to be much more efficient, but the names of the members of the Belcher Family roll of my fingertips easily enough).
-
-
-```r
-# little brittle helper
-make_set <- function(x) {
-  belcher_results %>%
-    filter(response == x) %>%
-    pull(resp_id)
-}
-
-linda <- make_set("Linda")
-
-tina <- make_set("Tina")
-
-gene <- make_set("Gene")
-
-louise <- make_set("Louise")
-```
-
-Now I'll follow this handy [tutorial](https://www.r-graph-gallery.com/14-venn-diagramm.html) from [the R Graph Gallery](https://www.r-graph-gallery.com), and turn this into a basic Venn Diagram
-
-
-```r
-library(VennDiagram)
-```
-
-```
-## Loading required package: grid
-```
-
-```
-## Loading required package: futile.logger
-```
-
-```r
-venn.diagram(
-  x = list(bob, linda, tina, gene, louise),
-  category.names = c("Bob", "Linda", "Tina", "Gene", "Louise"),
-  filename = "belcher_venn.png"
-)
-```
-
-```
-## [1] 1
-```
-
-![](/Users/maraaverick/pivot-to-video/belcher_venn.png)
-
-## 📽 I have seen this movie...
+## 🎬 I have seen this movie...
 
 Let's take a look at another dataset I collected with a quick survey, this one asking people whether they had or had not seen a given movie.
 
@@ -471,100 +409,94 @@ devtools::session_info()
 ##  date     2019-09-19                  
 ## 
 ## ─ Packages ──────────────────────────────────────────────────────────────
-##  package        * version    date       lib
-##  askpass          1.1        2019-01-13 [1]
-##  assertthat       0.2.1      2019-03-21 [1]
-##  backports        1.1.4      2019-04-10 [1]
-##  broom            0.5.2      2019-04-07 [1]
-##  callr            3.3.1      2019-07-18 [1]
-##  cellranger       1.1.0      2016-07-27 [1]
-##  cli              1.1.0      2019-03-19 [1]
-##  colorspace       1.4-1      2019-03-18 [1]
-##  crayon           1.3.4      2019-08-02 [1]
-##  curl             4.1        2019-09-16 [1]
-##  DBI              1.0.0      2018-05-02 [1]
-##  dbplyr           1.4.2      2019-06-17 [1]
-##  desc             1.2.0      2019-08-02 [1]
-##  devtools         2.2.0.9000 2019-09-13 [1]
-##  digest           0.6.20     2019-07-04 [1]
-##  dplyr          * 0.8.3.9000 2019-09-12 [1]
-##  DT               0.9        2019-09-17 [1]
-##  ellipsis         0.2.0.9000 2019-09-12 [1]
-##  emo              0.0.0.9000 2019-08-02 [1]
-##  evaluate         0.14       2019-05-28 [1]
-##  fansi            0.4.0      2019-08-02 [1]
-##  forcats        * 0.4.0.9000 2019-08-20 [1]
-##  formatR          1.7        2019-06-11 [1]
-##  fs               1.3.1.9000 2019-09-13 [1]
-##  futile.logger  * 1.4.3      2016-07-10 [1]
-##  futile.options   1.0.1      2018-04-20 [1]
-##  generics         0.0.2      2018-11-29 [1]
-##  ggplot2        * 3.2.1.9000 2019-09-09 [1]
-##  glue             1.3.1.9000 2019-09-12 [1]
-##  googlesheets     0.3.0      2018-06-29 [1]
-##  gridExtra        2.3        2017-09-09 [1]
-##  gtable           0.3.0      2019-03-25 [1]
-##  haven            2.1.1      2019-07-04 [1]
-##  here             0.1        2017-05-28 [1]
-##  hms              0.5.1      2019-08-23 [1]
-##  htmltools        0.3.6      2017-04-28 [1]
-##  htmlwidgets      1.3        2018-09-30 [1]
-##  httr             1.4.1      2019-08-05 [1]
-##  janitor          1.2.0      2019-04-21 [1]
-##  jsonlite         1.6        2018-12-07 [1]
-##  knitr            1.24       2019-08-08 [1]
-##  labeling         0.3        2014-08-23 [1]
-##  lambda.r         1.2.3      2018-05-17 [1]
-##  lattice          0.20-38    2018-11-04 [1]
-##  lifecycle        0.1.0      2019-08-01 [1]
-##  lubridate        1.7.4.9000 2019-09-13 [1]
-##  magrittr         1.5        2014-11-22 [1]
-##  memoise          1.1.0      2017-04-21 [1]
-##  modelr           0.1.5      2019-08-08 [1]
-##  munsell          0.5.0      2018-06-12 [1]
-##  nlme             3.1-141    2019-08-01 [1]
-##  openssl          1.4.1.9000 2019-09-13 [1]
-##  pillar           1.4.2      2019-06-29 [1]
-##  pkgbuild         1.0.5      2019-08-26 [1]
-##  pkgconfig        2.0.2      2018-08-16 [1]
-##  pkgload          1.0.2      2018-10-29 [1]
-##  plyr             1.8.4      2016-06-08 [1]
-##  prettyunits      1.0.2      2015-07-13 [1]
-##  processx         3.4.1.9000 2019-08-02 [1]
-##  ps               1.3.0      2018-12-21 [1]
-##  purrr          * 0.3.2.9000 2019-08-14 [1]
-##  R6               2.4.0      2019-02-14 [1]
-##  Rcpp             1.0.2      2019-07-25 [1]
-##  readr          * 1.3.1      2018-12-21 [1]
-##  readxl           1.3.1      2019-03-13 [1]
-##  remotes          2.1.0      2019-06-24 [1]
-##  reprex           0.3.0      2019-05-16 [1]
-##  rlang            0.4.0.9002 2019-09-17 [1]
-##  rmarkdown        1.15       2019-08-21 [1]
-##  rprojroot        1.3-2      2018-01-03 [1]
-##  rstudioapi       0.10       2019-03-19 [1]
-##  rvest            0.3.4      2019-05-15 [1]
-##  scales           1.0.0.9000 2019-08-02 [1]
-##  sessioninfo      1.1.1      2018-11-05 [1]
-##  snakecase        0.11.0     2019-05-25 [1]
-##  stringi          1.4.3      2019-03-12 [1]
-##  stringr        * 1.4.0      2019-02-10 [1]
-##  testthat         2.2.1      2019-07-25 [1]
-##  tibble         * 2.1.3      2019-06-06 [1]
-##  tidyr          * 1.0.0.9000 2019-09-18 [1]
-##  tidyselect       0.2.5.9000 2019-09-13 [1]
-##  tidyverse      * 1.2.1.9000 2019-09-13 [1]
-##  UpSetR           1.4.0      2019-09-09 [1]
-##  usethis          1.5.1.9000 2019-09-13 [1]
-##  utf8             1.1.4      2018-05-24 [1]
-##  vctrs            0.2.0.9002 2019-09-12 [1]
-##  VennDiagram    * 1.6.20     2018-03-28 [1]
-##  withr            2.1.2.9000 2019-09-09 [1]
-##  xfun             0.9        2019-08-21 [1]
-##  xml2             1.2.2      2019-08-09 [1]
-##  yaml             2.2.0      2018-07-25 [1]
-##  ymlthis          0.1.0      2019-09-13 [1]
-##  zeallot          0.1.0      2018-01-28 [1]
+##  package      * version    date       lib
+##  askpass        1.1        2019-01-13 [1]
+##  assertthat     0.2.1      2019-03-21 [1]
+##  backports      1.1.4      2019-04-10 [1]
+##  broom          0.5.2      2019-04-07 [1]
+##  callr          3.3.1      2019-07-18 [1]
+##  cellranger     1.1.0      2016-07-27 [1]
+##  cli            1.1.0      2019-03-19 [1]
+##  colorspace     1.4-1      2019-03-18 [1]
+##  crayon         1.3.4      2019-08-02 [1]
+##  curl           4.1        2019-09-16 [1]
+##  DBI            1.0.0      2018-05-02 [1]
+##  dbplyr         1.4.2      2019-06-17 [1]
+##  desc           1.2.0      2019-08-02 [1]
+##  devtools       2.2.0.9000 2019-09-13 [1]
+##  digest         0.6.20     2019-07-04 [1]
+##  dplyr        * 0.8.3.9000 2019-09-12 [1]
+##  DT             0.9        2019-09-17 [1]
+##  ellipsis       0.2.0.9000 2019-09-12 [1]
+##  emo            0.0.0.9000 2019-08-02 [1]
+##  evaluate       0.14       2019-05-28 [1]
+##  fansi          0.4.0      2019-08-02 [1]
+##  forcats      * 0.4.0.9000 2019-08-20 [1]
+##  fs             1.3.1.9000 2019-09-13 [1]
+##  generics       0.0.2      2018-11-29 [1]
+##  ggplot2      * 3.2.1.9000 2019-09-09 [1]
+##  glue           1.3.1.9000 2019-09-12 [1]
+##  googlesheets   0.3.0      2018-06-29 [1]
+##  gridExtra      2.3        2017-09-09 [1]
+##  gtable         0.3.0      2019-03-25 [1]
+##  haven          2.1.1      2019-07-04 [1]
+##  hms            0.5.1      2019-08-23 [1]
+##  htmltools      0.3.6      2017-04-28 [1]
+##  htmlwidgets    1.3        2018-09-30 [1]
+##  httr           1.4.1      2019-08-05 [1]
+##  janitor        1.2.0      2019-04-21 [1]
+##  jsonlite       1.6        2018-12-07 [1]
+##  knitr          1.24       2019-08-08 [1]
+##  labeling       0.3        2014-08-23 [1]
+##  lattice        0.20-38    2018-11-04 [1]
+##  lifecycle      0.1.0      2019-08-01 [1]
+##  lubridate      1.7.4.9000 2019-09-13 [1]
+##  magrittr       1.5        2014-11-22 [1]
+##  memoise        1.1.0      2017-04-21 [1]
+##  modelr         0.1.5      2019-08-08 [1]
+##  munsell        0.5.0      2018-06-12 [1]
+##  nlme           3.1-141    2019-08-01 [1]
+##  openssl        1.4.1.9000 2019-09-13 [1]
+##  pillar         1.4.2      2019-06-29 [1]
+##  pkgbuild       1.0.5      2019-08-26 [1]
+##  pkgconfig      2.0.2      2018-08-16 [1]
+##  pkgload        1.0.2      2018-10-29 [1]
+##  plyr           1.8.4      2016-06-08 [1]
+##  prettyunits    1.0.2      2015-07-13 [1]
+##  processx       3.4.1.9000 2019-08-02 [1]
+##  ps             1.3.0      2018-12-21 [1]
+##  purrr        * 0.3.2.9000 2019-08-14 [1]
+##  R6             2.4.0      2019-02-14 [1]
+##  Rcpp           1.0.2      2019-07-25 [1]
+##  readr        * 1.3.1      2018-12-21 [1]
+##  readxl         1.3.1      2019-03-13 [1]
+##  remotes        2.1.0      2019-06-24 [1]
+##  reprex         0.3.0      2019-05-16 [1]
+##  rlang          0.4.0.9002 2019-09-17 [1]
+##  rmarkdown      1.15       2019-08-21 [1]
+##  rprojroot      1.3-2      2018-01-03 [1]
+##  rstudioapi     0.10       2019-03-19 [1]
+##  rvest          0.3.4      2019-05-15 [1]
+##  scales         1.0.0.9000 2019-08-02 [1]
+##  sessioninfo    1.1.1      2018-11-05 [1]
+##  snakecase      0.11.0     2019-05-25 [1]
+##  stringi        1.4.3      2019-03-12 [1]
+##  stringr      * 1.4.0      2019-02-10 [1]
+##  testthat       2.2.1      2019-07-25 [1]
+##  tibble       * 2.1.3      2019-06-06 [1]
+##  tidyr        * 1.0.0.9000 2019-09-18 [1]
+##  tidyselect     0.2.5.9000 2019-09-13 [1]
+##  tidyverse    * 1.2.1.9000 2019-09-13 [1]
+##  UpSetR         1.4.0      2019-09-09 [1]
+##  usethis        1.5.1.9000 2019-09-13 [1]
+##  utf8           1.1.4      2018-05-24 [1]
+##  vctrs          0.2.0.9002 2019-09-12 [1]
+##  withr          2.1.2.9000 2019-09-09 [1]
+##  xfun           0.9        2019-08-21 [1]
+##  xml2           1.2.2      2019-08-09 [1]
+##  yaml           2.2.0      2018-07-25 [1]
+##  ymlthis        0.1.0      2019-09-13 [1]
+##  zeallot        0.1.0      2018-01-28 [1]
 ##  source                               
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
@@ -588,10 +520,7 @@ devtools::session_info()
 ##  CRAN (R 3.6.0)                       
 ##  Github (brodieG/fansi@7a83a69)       
 ##  local                                
-##  CRAN (R 3.6.0)                       
 ##  Github (r-lib/fs@380685c)            
-##  CRAN (R 3.6.0)                       
-##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  Github (tidyverse/ggplot2@23e3241)   
 ##  Github (tidyverse/glue@71eeddf)      
@@ -602,9 +531,7 @@ devtools::session_info()
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
-##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.1)                       
-##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
@@ -652,7 +579,6 @@ devtools::session_info()
 ##  Github (r-lib/usethis@a2342b8)       
 ##  CRAN (R 3.6.0)                       
 ##  Github (r-lib/vctrs@f7d2492)         
-##  CRAN (R 3.6.0)                       
 ##  Github (r-lib/withr@07bfc68)         
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
