@@ -170,7 +170,7 @@ UpSetR::upset(binary_df, nsets = 5, order.by = "freq")
 
 <img src="fig/basic-upset-1.png" width="1008" />
 
-## 🎬 I have seen this movie...
+## 🎥 I have seen this movie...
 
 Let's take a look at another dataset I collected with a quick survey, this one asking people whether they had or had not seen a given movie.
 
@@ -274,7 +274,7 @@ glimpse(movie_results)
 ## $ age                <dbl> 48, 31, 30, 20, 29, 28, 24, 42, 33, 34, 33, 3…
 ```
 
-### `tidyr::pivot_longer()`
+### [`tidyr::pivot_longer()`](https://tidyr.tidyverse.org/reference/pivot_longer.html)
 
 Since I only want to elongate the movies, and all of those columns are logical, I'll first select which columns I want by using `select_if()` and `is.logical()` as the predicate function.
 
@@ -387,6 +387,9 @@ movie_results %>%
 ## # … with 136 more rows
 ```
 
+Note the change in "shape" of our data, though the contents remain the same:
+
+![](https://i.imgur.com/JcIlr51.png)
 
 ---
 <!--

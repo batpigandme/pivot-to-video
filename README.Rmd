@@ -145,7 +145,7 @@ Since this dataset is wide, let's also take a gander at it using `glimpse()`:
 glimpse(movie_results)
 ```
 
-### `tidyr::pivot_longer()`
+### [`tidyr::pivot_longer()`](https://tidyr.tidyverse.org/reference/pivot_longer.html)
 
 Since I only want to elongate the movies, and all of those columns are logical, I'll first select which columns I want by using `select_if()` and `is.logical()` as the predicate function.
 
@@ -190,6 +190,9 @@ movie_results %>%
   select(vars_wanted)
 ```
 
+Note the change in "shape" of our data, though the contents remain the same:
+
+![](https://i.imgur.com/JcIlr51.png)
 
 ---
 <!--
