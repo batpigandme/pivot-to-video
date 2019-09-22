@@ -192,6 +192,12 @@ correlate(lil_seen_wide) %>%
   fashion()
 ```
 
+```{r movies-rplot}
+correlate(lil_seen_wide) %>%
+  rplot()
+```
+
+
 ```{r movies-upset}
 lil_seen_wide <- as.data.frame(lil_seen_wide)
 UpSetR::upset(lil_seen_wide, nsets = 13, order.by = "freq")
