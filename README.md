@@ -335,12 +335,89 @@ movie_bin
 ```r
 lil_seen <- movie_bin %>%
   select(resp_id, movie, seen_num)
+
+movie_bin %>%
+  group_by(movie) %>%
+  summarise(pct_seen = sum(seen_num) / n()) %>%
+  arrange(desc(pct_seen))
+```
+
+```
+## # A tibble: 12 x 2
+##    movie              pct_seen
+##    <chr>                 <dbl>
+##  1 the_big_lebowski      0.713
+##  2 airplane              0.643
+##  3 office_space          0.631
+##  4 anchorman             0.624
+##  5 superbad              0.611
+##  6 bridesmaids           0.580
+##  7 borat                 0.561
+##  8 the_blues_brothers    0.561
+##  9 old_school            0.433
+## 10 animal_house          0.427
+## 11 this_is_spinal_tap    0.363
+## 12 tommy_boy             0.325
 ```
 
 
 ```r
+library(corrr)
+
 lil_seen_wide <- lil_seen %>%
-  pivot_wider(names_from = movie, values_from = seen_num)
+  pivot_wider(names_from = movie, values_from = seen_num) %>%
+  select(-resp_id)
+
+correlate(lil_seen_wide) %>%
+  fashion()
+```
+
+```
+## 
+## Correlation method: 'pearson'
+## Missing treated using: 'pairwise.complete.obs'
+```
+
+```
+##               rowname airplane anchorman animal_house the_big_lebowski
+## 1            airplane                .19          .43              .26
+## 2           anchorman      .19                    .27              .26
+## 3        animal_house      .43       .27                           .18
+## 4    the_big_lebowski      .26       .26          .18                 
+## 5  the_blues_brothers      .31       .05          .25              .38
+## 6               borat     -.02       .32          .12              .38
+## 7         bridesmaids      .15       .32          .32              .09
+## 8        office_space      .34       .39          .42              .42
+## 9          old_school      .17       .44          .52              .33
+## 10 this_is_spinal_tap      .31       .18          .29              .19
+## 11          tommy_boy      .32       .26          .53              .17
+## 12           superbad      .17       .51          .37              .25
+##    the_blues_brothers borat bridesmaids office_space old_school
+## 1                 .31  -.02         .15          .34        .17
+## 2                 .05   .32         .32          .39        .44
+## 3                 .25   .12         .32          .42        .52
+## 4                 .38   .38         .09          .42        .33
+## 5                       .07         .03          .09        .13
+## 6                 .07               .13          .33        .36
+## 7                 .03   .13                      .34        .38
+## 8                 .09   .33         .34                     .40
+## 9                 .13   .36         .38          .40           
+## 10                .24   .11         .13          .22        .20
+## 11                .20   .12         .34          .39        .55
+## 12                .01   .37         .46          .34        .51
+##    this_is_spinal_tap tommy_boy superbad
+## 1                 .31       .32      .17
+## 2                 .18       .26      .51
+## 3                 .29       .53      .37
+## 4                 .19       .17      .25
+## 5                 .24       .20      .01
+## 6                 .11       .12      .37
+## 7                 .13       .34      .46
+## 8                 .22       .39      .34
+## 9                 .20       .55      .51
+## 10                          .13      .14
+## 11                .13                .30
+## 12                .14       .30
 ```
 
 
@@ -441,6 +518,7 @@ devtools::session_info()
 ##  cellranger     1.1.0      2016-07-27 [1]
 ##  cli            1.9.9.9000 2019-09-22 [1]
 ##  colorspace     1.4-1      2019-03-18 [1]
+##  corrr        * 0.4.0      2019-07-12 [1]
 ##  crayon         1.3.4      2019-08-02 [1]
 ##  curl           4.1        2019-09-16 [1]
 ##  DBI            1.0.0      2018-05-02 [1]
@@ -527,6 +605,7 @@ devtools::session_info()
 ##  CRAN (R 3.6.1)                       
 ##  CRAN (R 3.6.0)                       
 ##  Github (r-lib/cli@b276266)           
+##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  Github (r-lib/crayon@84be620)        
 ##  CRAN (R 3.6.1)                       

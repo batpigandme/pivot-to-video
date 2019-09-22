@@ -174,11 +174,22 @@ movie_bin
 ```{r}
 lil_seen <- movie_bin %>%
   select(resp_id, movie, seen_num)
+
+movie_bin %>%
+  group_by(movie) %>%
+  summarise(pct_seen = sum(seen_num) / n()) %>%
+  arrange(desc(pct_seen))
 ```
 
 ```{r}
+library(corrr)
+
 lil_seen_wide <- lil_seen %>%
-  pivot_wider(names_from = movie, values_from = seen_num)
+  pivot_wider(names_from = movie, values_from = seen_num) %>%
+  select(-resp_id)
+
+correlate(lil_seen_wide) %>%
+  fashion()
 ```
 
 ```{r movies-upset}
