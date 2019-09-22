@@ -165,11 +165,26 @@ head(movie_long)
 Aside: A nice little trick for recoding `TRUE`/`FALSE` as `0` and `1`, just use `as.numeric()`.
 
 ```{r}
-movie_long %>%
+movie_bin <- movie_long %>%
   mutate(seen_num = as.numeric(seen))
+
+movie_bin
 ```
 
+```{r}
+lil_seen <- movie_bin %>%
+  select(resp_id, movie, seen_num)
+```
 
+```{r}
+lil_seen_wide <- lil_seen %>%
+  pivot_wider(names_from = movie, values_from = seen_num)
+```
+
+```{r movies-upset}
+lil_seen_wide <- as.data.frame(lil_seen_wide)
+UpSetR::upset(lil_seen_wide, nsets = 13, order.by = "freq")
+```
 
 Let's briefly pretend we're looking at just three movies: Bridesmaids, Anchorman, and Airplane.
 

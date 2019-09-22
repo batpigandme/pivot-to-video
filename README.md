@@ -1,6 +1,6 @@
 ---
 author: Mara Averick
-date: '2019-09-19'
+date: '2019-09-22'
 title: '📺 Pivot to Video'
 output:
   html_document:
@@ -170,7 +170,7 @@ UpSetR::upset(binary_df, nsets = 5, order.by = "freq")
 
 <img src="fig/basic-upset-1.png" width="1008" />
 
-## 🎥 I have seen this movie...
+## 🎦 I have seen this movie...
 
 Let's take a look at another dataset I collected with a quick survey, this one asking people whether they had or had not seen a given movie.
 
@@ -256,7 +256,7 @@ glimpse(movie_results)
 ```
 
 ```
-## Observations: 146
+## Observations: 157
 ## Variables: 14
 ## $ resp_id            <chr> "1", "2", "3", "4", "5", "6", "7", "8", "9", …
 ## $ airplane           <lgl> TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE…
@@ -308,12 +308,14 @@ Aside: A nice little trick for recoding `TRUE`/`FALSE` as `0` and `1`, just use 
 
 
 ```r
-movie_long %>%
+movie_bin <- movie_long %>%
   mutate(seen_num = as.numeric(seen))
+
+movie_bin
 ```
 
 ```
-## # A tibble: 1,752 x 5
+## # A tibble: 1,884 x 5
 ##    resp_id   age movie              seen  seen_num
 ##    <chr>   <dbl> <chr>              <lgl>    <dbl>
 ##  1 1          48 airplane           TRUE         1
@@ -326,10 +328,28 @@ movie_long %>%
 ##  8 1          48 office_space       FALSE        0
 ##  9 1          48 old_school         FALSE        0
 ## 10 1          48 this_is_spinal_tap FALSE        0
-## # … with 1,742 more rows
+## # … with 1,874 more rows
 ```
 
 
+```r
+lil_seen <- movie_bin %>%
+  select(resp_id, movie, seen_num)
+```
+
+
+```r
+lil_seen_wide <- lil_seen %>%
+  pivot_wider(names_from = movie, values_from = seen_num)
+```
+
+
+```r
+lil_seen_wide <- as.data.frame(lil_seen_wide)
+UpSetR::upset(lil_seen_wide, nsets = 13, order.by = "freq")
+```
+
+<img src="fig/movies-upset-1.png" width="1008" />
 
 Let's briefly pretend we're looking at just three movies: Bridesmaids, Anchorman, and Airplane.
 
@@ -345,7 +365,7 @@ movie_long %>%
 ```
 
 ```
-## # A tibble: 438 x 4
+## # A tibble: 471 x 4
 ##    resp_id   age movie       seen 
 ##    <chr>   <dbl> <chr>       <lgl>
 ##  1 1          48 airplane    TRUE 
@@ -358,7 +378,7 @@ movie_long %>%
 ##  8 3          30 anchorman   FALSE
 ##  9 3          30 bridesmaids FALSE
 ## 10 4          20 airplane    FALSE
-## # … with 428 more rows
+## # … with 461 more rows
 ```
 
 For the wide version, we'll add the respondent id and age to the list of variables we want to look at.
@@ -371,7 +391,7 @@ movie_results %>%
 ```
 
 ```
-## # A tibble: 146 x 5
+## # A tibble: 157 x 5
 ##    resp_id   age airplane anchorman bridesmaids
 ##    <chr>   <dbl> <lgl>    <lgl>     <lgl>      
 ##  1 1          48 TRUE     TRUE      TRUE       
@@ -384,7 +404,7 @@ movie_results %>%
 ##  8 8          42 TRUE     FALSE     FALSE      
 ##  9 9          33 TRUE     TRUE      TRUE       
 ## 10 10         34 TRUE     TRUE      TRUE       
-## # … with 136 more rows
+## # … with 147 more rows
 ```
 
 Note the change in "shape" of our data, though the contents remain the same:
@@ -409,7 +429,7 @@ devtools::session_info()
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       America/New_York            
-##  date     2019-09-19                  
+##  date     2019-09-22                  
 ## 
 ## ─ Packages ──────────────────────────────────────────────────────────────
 ##  package      * version    date       lib
@@ -417,20 +437,19 @@ devtools::session_info()
 ##  assertthat     0.2.1      2019-03-21 [1]
 ##  backports      1.1.4      2019-04-10 [1]
 ##  broom          0.5.2      2019-04-07 [1]
-##  callr          3.3.1      2019-07-18 [1]
+##  callr          3.3.2      2019-09-22 [1]
 ##  cellranger     1.1.0      2016-07-27 [1]
-##  cli            1.1.0      2019-03-19 [1]
+##  cli            1.9.9.9000 2019-09-22 [1]
 ##  colorspace     1.4-1      2019-03-18 [1]
 ##  crayon         1.3.4      2019-08-02 [1]
 ##  curl           4.1        2019-09-16 [1]
 ##  DBI            1.0.0      2018-05-02 [1]
 ##  dbplyr         1.4.2      2019-06-17 [1]
 ##  desc           1.2.0      2019-08-02 [1]
-##  devtools       2.2.0.9000 2019-09-13 [1]
-##  digest         0.6.20     2019-07-04 [1]
+##  devtools       2.2.0.9000 2019-09-22 [1]
+##  digest         0.6.21     2019-09-20 [1]
 ##  dplyr        * 0.8.3.9000 2019-09-12 [1]
-##  DT             0.9        2019-09-17 [1]
-##  ellipsis       0.2.0.9000 2019-09-12 [1]
+##  ellipsis       0.2.0.9000 2019-09-22 [1]
 ##  emo            0.0.0.9000 2019-08-02 [1]
 ##  evaluate       0.14       2019-05-28 [1]
 ##  fansi          0.4.0      2019-08-02 [1]
@@ -445,11 +464,10 @@ devtools::session_info()
 ##  haven          2.1.1      2019-07-04 [1]
 ##  hms            0.5.1      2019-08-23 [1]
 ##  htmltools      0.3.6      2017-04-28 [1]
-##  htmlwidgets    1.3        2018-09-30 [1]
 ##  httr           1.4.1      2019-08-05 [1]
 ##  janitor        1.2.0      2019-04-21 [1]
 ##  jsonlite       1.6        2018-12-07 [1]
-##  knitr          1.24       2019-08-08 [1]
+##  knitr          1.25       2019-09-18 [1]
 ##  labeling       0.3        2014-08-23 [1]
 ##  lattice        0.20-38    2018-11-04 [1]
 ##  lifecycle      0.1.0      2019-08-01 [1]
@@ -462,13 +480,14 @@ devtools::session_info()
 ##  openssl        1.4.1.9000 2019-09-13 [1]
 ##  pillar         1.4.2      2019-06-29 [1]
 ##  pkgbuild       1.0.5      2019-08-26 [1]
-##  pkgconfig      2.0.2      2018-08-16 [1]
+##  pkgconfig      2.0.3      2019-09-22 [1]
 ##  pkgload        1.0.2      2018-10-29 [1]
 ##  plyr           1.8.4      2016-06-08 [1]
 ##  prettyunits    1.0.2      2015-07-13 [1]
 ##  processx       3.4.1.9000 2019-08-02 [1]
+##  progress       1.2.2      2019-05-16 [1]
 ##  ps             1.3.0      2018-12-21 [1]
-##  purrr        * 0.3.2.9000 2019-08-14 [1]
+##  purrr        * 0.3.2.9000 2019-09-22 [1]
 ##  R6             2.4.0      2019-02-14 [1]
 ##  Rcpp           1.0.2      2019-07-25 [1]
 ##  readr        * 1.3.1      2018-12-21 [1]
@@ -488,7 +507,7 @@ devtools::session_info()
 ##  testthat       2.2.1      2019-07-25 [1]
 ##  tibble       * 2.1.3      2019-06-06 [1]
 ##  tidyr        * 1.0.0.9000 2019-09-18 [1]
-##  tidyselect     0.2.5.9000 2019-09-13 [1]
+##  tidyselect     0.2.5.9000 2019-09-22 [1]
 ##  tidyverse    * 1.2.1.9000 2019-09-13 [1]
 ##  UpSetR         1.4.0      2019-09-09 [1]
 ##  usethis        1.5.1.9000 2019-09-13 [1]
@@ -498,27 +517,26 @@ devtools::session_info()
 ##  xfun           0.9        2019-08-21 [1]
 ##  xml2           1.2.2      2019-08-09 [1]
 ##  yaml           2.2.0      2018-07-25 [1]
-##  ymlthis        0.1.0      2019-09-13 [1]
+##  ymlthis        0.1.0      2019-09-22 [1]
 ##  zeallot        0.1.0      2018-01-28 [1]
 ##  source                               
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
+##  CRAN (R 3.6.1)                       
 ##  CRAN (R 3.6.0)                       
-##  CRAN (R 3.6.0)                       
-##  standard (@1.1.0)                    
+##  Github (r-lib/cli@b276266)           
 ##  CRAN (R 3.6.0)                       
 ##  Github (r-lib/crayon@84be620)        
 ##  CRAN (R 3.6.1)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  Github (r-lib/desc@c860e7b)          
-##  Github (r-lib/devtools@fbebcab)      
+##  Github (r-lib/devtools@2765fbe)      
 ##  CRAN (R 3.6.0)                       
 ##  Github (tidyverse/dplyr@7728876)     
-##  CRAN (R 3.6.1)                       
-##  Github (r-lib/ellipsis@afdaa20)      
+##  Github (r-lib/ellipsis@dc23a8c)      
 ##  Github (hadley/emo@02a5206)          
 ##  CRAN (R 3.6.0)                       
 ##  Github (brodieG/fansi@7a83a69)       
@@ -527,7 +545,6 @@ devtools::session_info()
 ##  CRAN (R 3.6.0)                       
 ##  Github (tidyverse/ggplot2@23e3241)   
 ##  Github (tidyverse/glue@71eeddf)      
-##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
@@ -550,13 +567,14 @@ devtools::session_info()
 ##  Github (jeroen/openssl@62d7d8c)      
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.1)                       
-##  CRAN (R 3.6.0)                       
+##  CRAN (R 3.6.1)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  Github (r-lib/processx@8843706)      
 ##  CRAN (R 3.6.0)                       
-##  Github (tidyverse/purrr@c755bb9)     
+##  CRAN (R 3.6.0)                       
+##  Github (tidyverse/purrr@9edf0ca)     
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
@@ -576,7 +594,7 @@ devtools::session_info()
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  Github (tidyverse/tidyr@4618116)     
-##  Github (tidyverse/tidyselect@d42e82f)
+##  Github (tidyverse/tidyselect@04c52ad)
 ##  Github (tidyverse/tidyverse@9a4cbe9) 
 ##  Github (hms-dbmi/UpSetR@572be88)     
 ##  Github (r-lib/usethis@a2342b8)       
@@ -586,7 +604,7 @@ devtools::session_info()
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
-##  Github (r-lib/ymlthis@02304dc)       
+##  Github (r-lib/ymlthis@09b5c99)       
 ##  CRAN (R 3.6.0)                       
 ## 
 ## [1] /Library/Frameworks/R.framework/Versions/3.6/Resources/library
