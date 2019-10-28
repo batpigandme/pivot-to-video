@@ -1,6 +1,6 @@
 ---
 author: Mara Averick
-date: '2019-09-17'
+date: '2019-10-28'
 title: Pivot to Video
 output:
   html_document:
@@ -30,7 +30,7 @@ library(tidyverse)
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#ibjocsrraw .gt_table {
+#eayatsssmc .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -55,13 +55,13 @@ library(tidyverse)
   /* table.border.bottom.color */
 }
 
-#ibjocsrraw .gt_heading {
+#eayatsssmc .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#ibjocsrraw .gt_title {
+#eayatsssmc .gt_title {
   color: #333333;
   font-size: 125%;
   /* heading.title.font.size */
@@ -72,7 +72,7 @@ library(tidyverse)
   border-bottom-width: 0;
 }
 
-#ibjocsrraw .gt_subtitle {
+#eayatsssmc .gt_subtitle {
   color: #333333;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -83,7 +83,7 @@ library(tidyverse)
   border-top-width: 0;
 }
 
-#ibjocsrraw .gt_bottom_border {
+#eayatsssmc .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -92,7 +92,7 @@ library(tidyverse)
   /* heading.border.bottom.color */
 }
 
-#ibjocsrraw .gt_column_spanner {
+#eayatsssmc .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -100,7 +100,7 @@ library(tidyverse)
   padding-bottom: 4px;
 }
 
-#ibjocsrraw .gt_col_heading {
+#eayatsssmc .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -114,23 +114,23 @@ library(tidyverse)
   overflow-x: hidden;
 }
 
-#ibjocsrraw .gt_columns_top_border {
+#eayatsssmc .gt_columns_top_border {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
 }
 
-#ibjocsrraw .gt_columns_bottom_border {
+#eayatsssmc .gt_columns_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ibjocsrraw .gt_sep_right {
+#eayatsssmc .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#ibjocsrraw .gt_group_heading {
+#eayatsssmc .gt_group_heading {
   padding: 8px;
   /* row_group.padding */
   color: #333333;
@@ -155,7 +155,7 @@ library(tidyverse)
   vertical-align: middle;
 }
 
-#ibjocsrraw .gt_empty_group_heading {
+#eayatsssmc .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -179,19 +179,19 @@ library(tidyverse)
   vertical-align: middle;
 }
 
-#ibjocsrraw .gt_striped {
+#eayatsssmc .gt_striped {
   background-color: #8080800D;
 }
 
-#ibjocsrraw .gt_from_md > :first-child {
+#eayatsssmc .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ibjocsrraw .gt_from_md > :last-child {
+#eayatsssmc .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ibjocsrraw .gt_row {
+#eayatsssmc .gt_row {
   padding: 8px;
   /* row.padding */
   margin: 10px;
@@ -202,14 +202,14 @@ library(tidyverse)
   overflow-x: hidden;
 }
 
-#ibjocsrraw .gt_stub {
+#eayatsssmc .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #D3D3D3;
   padding-left: 12px;
 }
 
-#ibjocsrraw .gt_summary_row {
+#eayatsssmc .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   /* summary_row.background.color */
@@ -219,7 +219,7 @@ library(tidyverse)
   /* summary_row.text_transform */
 }
 
-#ibjocsrraw .gt_grand_summary_row {
+#eayatsssmc .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   /* grand_summary_row.background.color */
@@ -229,19 +229,19 @@ library(tidyverse)
   /* grand_summary_row.text_transform */
 }
 
-#ibjocsrraw .gt_first_summary_row {
+#eayatsssmc .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
 }
 
-#ibjocsrraw .gt_first_grand_summary_row {
+#eayatsssmc .gt_first_grand_summary_row {
   border-top-style: double;
   border-top-width: 6px;
   border-top-color: #D3D3D3;
 }
 
-#ibjocsrraw .gt_table_body {
+#eayatsssmc .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -256,7 +256,7 @@ library(tidyverse)
   /* table_body.border.bottom.color */
 }
 
-#ibjocsrraw .gt_footnotes {
+#eayatsssmc .gt_footnotes {
   border-top-style: solid;
   /* footnotes.border.top.style */
   border-top-width: 2px;
@@ -265,7 +265,7 @@ library(tidyverse)
   /* footnotes.border.top.color */
 }
 
-#ibjocsrraw .gt_footnote {
+#eayatsssmc .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   margin: 0px;
@@ -273,7 +273,7 @@ library(tidyverse)
   /* footnote.padding */
 }
 
-#ibjocsrraw .gt_sourcenotes {
+#eayatsssmc .gt_sourcenotes {
   border-top-style: solid;
   /* sourcenotes.border.top.style */
   border-top-width: 2px;
@@ -282,48 +282,48 @@ library(tidyverse)
   /* sourcenotes.border.top.color */
 }
 
-#ibjocsrraw .gt_sourcenote {
+#eayatsssmc .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#ibjocsrraw .gt_center {
+#eayatsssmc .gt_center {
   text-align: center;
 }
 
-#ibjocsrraw .gt_left {
+#eayatsssmc .gt_left {
   text-align: left;
 }
 
-#ibjocsrraw .gt_right {
+#eayatsssmc .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ibjocsrraw .gt_font_normal {
+#eayatsssmc .gt_font_normal {
   font-weight: normal;
 }
 
-#ibjocsrraw .gt_font_bold {
+#eayatsssmc .gt_font_bold {
   font-weight: bold;
 }
 
-#ibjocsrraw .gt_font_italic {
+#eayatsssmc .gt_font_italic {
   font-style: italic;
 }
 
-#ibjocsrraw .gt_super {
+#eayatsssmc .gt_super {
   font-size: 65%;
 }
 
-#ibjocsrraw .gt_footnote_marks {
+#eayatsssmc .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="ibjocsrraw" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="eayatsssmc" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead>
     <tr>
       <th colspan="3" class="gt_heading gt_title gt_font_normal gt_center gt_bottom_border" style><strong>Functions used in this section</strong></th>
@@ -411,16 +411,16 @@ agg_results
 ## # A tibble: 30 x 2
 ##    response                       total
 ##    <chr>                          <int>
-##  1 Bob                               49
-##  2 Tina                              29
-##  3 Louise                            23
+##  1 Bob                               53
+##  2 Tina                              31
+##  3 Louise                            24
 ##  4 Bob, Tina                         22
-##  5 Bob, Tina, Louise                 17
-##  6 Bob, Louise                       16
-##  7 Tina, Louise                      12
-##  8 Bob, Linda, Tina, Gene, Louise    11
+##  5 Bob, Louise                       19
+##  6 Bob, Tina, Louise                 18
+##  7 Tina, Louise                      13
+##  8 Bob, Linda, Tina, Gene, Louise    12
 ##  9 Bob, Tina, Gene                   10
-## 10 Bob, Gene                          8
+## 10 Bob, Gene                          9
 ## # … with 20 more rows
 ```
 
@@ -436,7 +436,15 @@ results <- results %>%
   tidyr::separate_rows(response) %>%
   dplyr::mutate(identify = 1,
                 resp_id = as.character(resp_id))
+```
 
+```
+## Note: Using an external vector in selections is brittle.
+## ℹ If the data contains `vars` it will be selected instead.
+## ℹ Use `all_of(vars)` instead of just `vars` to silence this message.
+```
+
+```r
 head(results)
 ```
 

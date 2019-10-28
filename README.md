@@ -1,6 +1,6 @@
 ---
 author: Mara Averick
-date: '2019-09-22'
+date: '2019-10-28'
 title: '📺 Pivot to Video'
 output:
   html_document:
@@ -76,16 +76,16 @@ agg_results
 ## # A tibble: 30 x 2
 ##    response                       total
 ##    <chr>                          <int>
-##  1 Bob                               49
-##  2 Tina                              29
-##  3 Louise                            23
+##  1 Bob                               53
+##  2 Tina                              31
+##  3 Louise                            24
 ##  4 Bob, Tina                         22
-##  5 Bob, Louise                       17
-##  6 Bob, Tina, Louise                 17
-##  7 Tina, Louise                      12
-##  8 Bob, Linda, Tina, Gene, Louise    11
+##  5 Bob, Louise                       19
+##  6 Bob, Tina, Louise                 18
+##  7 Tina, Louise                      13
+##  8 Bob, Linda, Tina, Gene, Louise    12
 ##  9 Bob, Tina, Gene                   10
-## 10 Bob, Gene                          8
+## 10 Bob, Gene                          9
 ## # … with 20 more rows
 ```
 
@@ -103,7 +103,15 @@ belcher_results <- belcher_results %>%
   tidyr::separate_rows(response) %>%
   dplyr::mutate(identify = 1,
                 resp_id = as.character(resp_id))
+```
 
+```
+## Note: Using an external vector in selections is brittle.
+## ℹ If the data contains `vars` it will be selected instead.
+## ℹ Use `all_of(vars)` instead of just `vars` to silence this message.
+```
+
+```r
 head(belcher_results)
 ```
 
@@ -170,7 +178,7 @@ UpSetR::upset(binary_df, nsets = 5, order.by = "freq")
 
 <img src="fig/basic-upset-1.png" width="1008" />
 
-## 🎦 I have seen this movie...
+## 🎬 I have seen this movie...
 
 Let's take a look at another dataset I collected with a quick survey, this one asking people whether they had or had not seen a given movie.
 
@@ -256,7 +264,7 @@ glimpse(movie_results)
 ```
 
 ```
-## Observations: 157
+## Observations: 158
 ## Variables: 14
 ## $ resp_id            <chr> "1", "2", "3", "4", "5", "6", "7", "8", "9", …
 ## $ airplane           <lgl> TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE…
@@ -315,7 +323,7 @@ movie_bin
 ```
 
 ```
-## # A tibble: 1,884 x 5
+## # A tibble: 1,896 x 5
 ##    resp_id   age movie              seen  seen_num
 ##    <chr>   <dbl> <chr>              <lgl>    <dbl>
 ##  1 1          48 airplane           TRUE         1
@@ -328,7 +336,7 @@ movie_bin
 ##  8 1          48 office_space       FALSE        0
 ##  9 1          48 old_school         FALSE        0
 ## 10 1          48 this_is_spinal_tap FALSE        0
-## # … with 1,874 more rows
+## # … with 1,886 more rows
 ```
 
 
@@ -346,18 +354,18 @@ movie_bin %>%
 ## # A tibble: 12 x 2
 ##    movie              pct_seen
 ##    <chr>                 <dbl>
-##  1 the_big_lebowski      0.713
-##  2 airplane              0.643
-##  3 office_space          0.631
-##  4 anchorman             0.624
-##  5 superbad              0.611
-##  6 bridesmaids           0.580
-##  7 borat                 0.561
-##  8 the_blues_brothers    0.561
-##  9 old_school            0.433
-## 10 animal_house          0.427
-## 11 this_is_spinal_tap    0.363
-## 12 tommy_boy             0.325
+##  1 the_big_lebowski      0.715
+##  2 airplane              0.646
+##  3 office_space          0.633
+##  4 anchorman             0.627
+##  5 superbad              0.608
+##  6 bridesmaids           0.582
+##  7 borat                 0.563
+##  8 the_blues_brothers    0.563
+##  9 animal_house          0.430
+## 10 old_school            0.430
+## 11 this_is_spinal_tap    0.367
+## 12 tommy_boy             0.323
 ```
 
 
@@ -380,45 +388,64 @@ correlate(lil_seen_wide) %>%
 
 ```
 ##               rowname airplane anchorman animal_house the_big_lebowski
-## 1            airplane                .19          .43              .26
-## 2           anchorman      .19                    .27              .26
+## 1            airplane                .19          .43              .27
+## 2           anchorman      .19                    .27              .27
 ## 3        animal_house      .43       .27                           .18
-## 4    the_big_lebowski      .26       .26          .18                 
-## 5  the_blues_brothers      .31       .05          .25              .38
-## 6               borat     -.02       .32          .12              .38
-## 7         bridesmaids      .15       .32          .32              .09
+## 4    the_big_lebowski      .27       .27          .18                 
+## 5  the_blues_brothers      .31       .06          .25              .38
+## 6               borat     -.01       .32          .12              .38
+## 7         bridesmaids      .15       .33          .32              .09
 ## 8        office_space      .34       .39          .42              .42
-## 9          old_school      .17       .44          .52              .33
-## 10 this_is_spinal_tap      .31       .18          .29              .19
-## 11          tommy_boy      .32       .26          .53              .17
-## 12           superbad      .17       .51          .37              .25
+## 9          old_school      .16       .43          .51              .32
+## 10 this_is_spinal_tap      .32       .18          .29              .19
+## 11          tommy_boy      .31       .25          .52              .17
+## 12           superbad      .16       .51          .36              .24
 ##    the_blues_brothers borat bridesmaids office_space old_school
-## 1                 .31  -.02         .15          .34        .17
-## 2                 .05   .32         .32          .39        .44
-## 3                 .25   .12         .32          .42        .52
-## 4                 .38   .38         .09          .42        .33
-## 5                       .07         .03          .09        .13
-## 6                 .07               .13          .33        .36
-## 7                 .03   .13                      .34        .38
-## 8                 .09   .33         .34                     .40
-## 9                 .13   .36         .38          .40           
-## 10                .24   .11         .13          .22        .20
+## 1                 .31  -.01         .15          .34        .16
+## 2                 .06   .32         .33          .39        .43
+## 3                 .25   .12         .32          .42        .51
+## 4                 .38   .38         .09          .42        .32
+## 5                       .07         .03          .10        .12
+## 6                 .07               .13          .34        .35
+## 7                 .03   .13                      .34        .37
+## 8                 .10   .34         .34                     .40
+## 9                 .12   .35         .37          .40           
+## 10                .25   .11         .14          .23        .19
 ## 11                .20   .12         .34          .39        .55
-## 12                .01   .37         .46          .34        .51
+## 12               -.00   .36         .45          .33        .52
 ##    this_is_spinal_tap tommy_boy superbad
-## 1                 .31       .32      .17
-## 2                 .18       .26      .51
-## 3                 .29       .53      .37
-## 4                 .19       .17      .25
-## 5                 .24       .20      .01
-## 6                 .11       .12      .37
-## 7                 .13       .34      .46
-## 8                 .22       .39      .34
-## 9                 .20       .55      .51
-## 10                          .13      .14
-## 11                .13                .30
-## 12                .14       .30
+## 1                 .32       .31      .16
+## 2                 .18       .25      .51
+## 3                 .29       .52      .36
+## 4                 .19       .17      .24
+## 5                 .25       .20     -.00
+## 6                 .11       .12      .36
+## 7                 .14       .34      .45
+## 8                 .23       .39      .33
+## 9                 .19       .55      .52
+## 10                          .12      .13
+## 11                .12                .31
+## 12                .13       .31
 ```
+
+
+```r
+correlate(lil_seen_wide) %>%
+  rplot()
+```
+
+```
+## 
+## Correlation method: 'pearson'
+## Missing treated using: 'pairwise.complete.obs'
+```
+
+```
+## Don't know how to automatically pick scale for object of type noquote. Defaulting to continuous.
+```
+
+<img src="fig/movies-rplot-1.png" width="1008" />
+
 
 
 ```r
@@ -442,7 +469,7 @@ movie_long %>%
 ```
 
 ```
-## # A tibble: 471 x 4
+## # A tibble: 474 x 4
 ##    resp_id   age movie       seen 
 ##    <chr>   <dbl> <chr>       <lgl>
 ##  1 1          48 airplane    TRUE 
@@ -455,7 +482,7 @@ movie_long %>%
 ##  8 3          30 anchorman   FALSE
 ##  9 3          30 bridesmaids FALSE
 ## 10 4          20 airplane    FALSE
-## # … with 461 more rows
+## # … with 464 more rows
 ```
 
 For the wide version, we'll add the respondent id and age to the list of variables we want to look at.
@@ -468,7 +495,13 @@ movie_results %>%
 ```
 
 ```
-## # A tibble: 157 x 5
+## Note: Using an external vector in selections is brittle.
+## ℹ If the data contains `vars_wanted` it will be selected instead.
+## ℹ Use `all_of(vars_wanted)` instead of just `vars_wanted` to silence this message.
+```
+
+```
+## # A tibble: 158 x 5
 ##    resp_id   age airplane anchorman bridesmaids
 ##    <chr>   <dbl> <lgl>    <lgl>     <lgl>      
 ##  1 1          48 TRUE     TRUE      TRUE       
@@ -481,7 +514,7 @@ movie_results %>%
 ##  8 8          42 TRUE     FALSE     FALSE      
 ##  9 9          33 TRUE     TRUE      TRUE       
 ## 10 10         34 TRUE     TRUE      TRUE       
-## # … with 147 more rows
+## # … with 148 more rows
 ```
 
 Note the change in "shape" of our data, though the contents remain the same:
@@ -506,124 +539,125 @@ devtools::session_info()
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       America/New_York            
-##  date     2019-09-22                  
+##  date     2019-10-28                  
 ## 
 ## ─ Packages ──────────────────────────────────────────────────────────────
 ##  package      * version    date       lib
 ##  askpass        1.1        2019-01-13 [1]
 ##  assertthat     0.2.1      2019-03-21 [1]
-##  backports      1.1.4      2019-04-10 [1]
+##  backports      1.1.5      2019-10-02 [1]
 ##  broom          0.5.2      2019-04-07 [1]
 ##  callr          3.3.2      2019-09-22 [1]
 ##  cellranger     1.1.0      2016-07-27 [1]
-##  cli            1.9.9.9000 2019-09-22 [1]
+##  cli            1.1.0      2019-03-19 [1]
 ##  colorspace     1.4-1      2019-03-18 [1]
 ##  corrr        * 0.4.0      2019-07-12 [1]
-##  crayon         1.3.4      2019-08-02 [1]
-##  curl           4.1        2019-09-16 [1]
-##  DBI            1.0.0      2018-05-02 [1]
-##  dbplyr         1.4.2      2019-06-17 [1]
-##  desc           1.2.0      2019-08-02 [1]
-##  devtools       2.2.0.9000 2019-09-22 [1]
+##  crayon         1.3.4      2019-09-18 [1]
+##  curl           4.2        2019-09-24 [1]
+##  desc           1.2.0      2019-10-28 [1]
+##  devtools       2.2.1      2019-09-24 [1]
 ##  digest         0.6.21     2019-09-20 [1]
-##  dplyr        * 0.8.3.9000 2019-09-12 [1]
-##  ellipsis       0.2.0.9000 2019-09-22 [1]
-##  emo            0.0.0.9000 2019-08-02 [1]
+##  dplyr        * 0.8.3.9000 2019-10-14 [1]
+##  ellipsis       0.3.0      2019-09-20 [1]
+##  emo            0.0.0.9000 2019-09-18 [1]
 ##  evaluate       0.14       2019-05-28 [1]
-##  fansi          0.4.0      2019-08-02 [1]
-##  forcats      * 0.4.0.9000 2019-08-20 [1]
-##  fs             1.3.1.9000 2019-09-13 [1]
+##  fansi          0.4.0      2019-09-18 [1]
+##  forcats      * 0.4.0      2019-02-17 [1]
+##  fs             1.3.1      2019-05-06 [1]
 ##  generics       0.0.2      2018-11-29 [1]
-##  ggplot2      * 3.2.1.9000 2019-09-09 [1]
-##  glue           1.3.1.9000 2019-09-12 [1]
+##  ggplot2      * 3.2.1.9000 2019-10-14 [1]
+##  glue           1.3.1      2019-03-12 [1]
 ##  googlesheets   0.3.0      2018-06-29 [1]
 ##  gridExtra      2.3        2017-09-09 [1]
 ##  gtable         0.3.0      2019-03-25 [1]
 ##  haven          2.1.1      2019-07-04 [1]
 ##  hms            0.5.1      2019-08-23 [1]
-##  htmltools      0.3.6      2017-04-28 [1]
+##  htmltools      0.4.0      2019-10-04 [1]
+##  httpuv         1.5.2      2019-09-11 [1]
 ##  httr           1.4.1      2019-08-05 [1]
 ##  janitor        1.2.0      2019-04-21 [1]
 ##  jsonlite       1.6        2018-12-07 [1]
 ##  knitr          1.25       2019-09-18 [1]
 ##  labeling       0.3        2014-08-23 [1]
+##  later          1.0.0      2019-10-04 [1]
 ##  lattice        0.20-38    2018-11-04 [1]
 ##  lifecycle      0.1.0      2019-08-01 [1]
-##  lubridate      1.7.4.9000 2019-09-13 [1]
+##  lubridate      1.7.4.9000 2019-09-18 [1]
 ##  magrittr       1.5        2014-11-22 [1]
 ##  memoise        1.1.0      2017-04-21 [1]
 ##  modelr         0.1.5      2019-08-08 [1]
 ##  munsell        0.5.0      2018-06-12 [1]
 ##  nlme           3.1-141    2019-08-01 [1]
-##  openssl        1.4.1.9000 2019-09-13 [1]
+##  openssl        1.4.1.9000 2019-09-18 [1]
 ##  pillar         1.4.2      2019-06-29 [1]
-##  pkgbuild       1.0.5      2019-08-26 [1]
+##  pkgbuild       1.0.6      2019-10-09 [1]
 ##  pkgconfig      2.0.3      2019-09-22 [1]
 ##  pkgload        1.0.2      2018-10-29 [1]
 ##  plyr           1.8.4      2016-06-08 [1]
 ##  prettyunits    1.0.2      2015-07-13 [1]
-##  processx       3.4.1.9000 2019-08-02 [1]
-##  progress       1.2.2      2019-05-16 [1]
+##  processx       3.4.1.9000 2019-10-28 [1]
+##  promises       1.1.0      2019-10-04 [1]
 ##  ps             1.3.0      2018-12-21 [1]
-##  purrr        * 0.3.2.9000 2019-09-22 [1]
+##  purrr        * 0.3.3.9000 2019-10-28 [1]
 ##  R6             2.4.0      2019-02-14 [1]
 ##  Rcpp           1.0.2      2019-07-25 [1]
 ##  readr        * 1.3.1      2018-12-21 [1]
 ##  readxl         1.3.1      2019-03-13 [1]
 ##  remotes        2.1.0      2019-06-24 [1]
-##  reprex         0.3.0      2019-05-16 [1]
-##  rlang          0.4.0.9002 2019-09-17 [1]
-##  rmarkdown      1.15       2019-08-21 [1]
+##  rlang          0.4.1.9000 2019-10-28 [1]
+##  rmarkdown      1.16       2019-10-01 [1]
 ##  rprojroot      1.3-2      2018-01-03 [1]
 ##  rstudioapi     0.10       2019-03-19 [1]
 ##  rvest          0.3.4      2019-05-15 [1]
-##  scales         1.0.0.9000 2019-08-02 [1]
+##  scales         1.0.0.9000 2019-10-28 [1]
 ##  sessioninfo    1.1.1      2018-11-05 [1]
 ##  snakecase      0.11.0     2019-05-25 [1]
 ##  stringi        1.4.3      2019-03-12 [1]
 ##  stringr      * 1.4.0      2019-02-10 [1]
 ##  testthat       2.2.1      2019-07-25 [1]
 ##  tibble       * 2.1.3      2019-06-06 [1]
-##  tidyr        * 1.0.0.9000 2019-09-18 [1]
-##  tidyselect     0.2.5.9000 2019-09-22 [1]
-##  tidyverse    * 1.2.1.9000 2019-09-13 [1]
-##  UpSetR         1.4.0      2019-09-09 [1]
-##  usethis        1.5.1.9000 2019-09-13 [1]
+##  tidyr        * 1.0.0.9000 2019-10-15 [1]
+##  tidyselect     0.2.5.9000 2019-10-28 [1]
+##  tidyverse    * 1.2.1      2017-11-14 [1]
+##  UpSetR         1.4.0      2019-09-18 [1]
+##  usethis        1.5.1.9000 2019-10-28 [1]
 ##  utf8           1.1.4      2018-05-24 [1]
-##  vctrs          0.2.0.9002 2019-09-12 [1]
-##  withr          2.1.2.9000 2019-09-09 [1]
-##  xfun           0.9        2019-08-21 [1]
+##  vctrs          0.2.0.9007 2019-10-28 [1]
+##  withr          2.1.2.9000 2019-09-18 [1]
+##  xfun           0.10       2019-10-01 [1]
 ##  xml2           1.2.2      2019-08-09 [1]
 ##  yaml           2.2.0      2018-07-25 [1]
-##  ymlthis        0.1.0      2019-09-22 [1]
+##  ymlthis        0.1.0.9000 2019-10-28 [1]
 ##  zeallot        0.1.0      2018-01-28 [1]
 ##  source                               
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
-##  CRAN (R 3.6.1)                       
 ##  CRAN (R 3.6.0)                       
-##  Github (r-lib/cli@b276266)           
+##  CRAN (R 3.6.0)                       
+##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  Github (r-lib/crayon@84be620)        
-##  CRAN (R 3.6.1)                       
+##  CRAN (R 3.6.0)                       
+##  Github (r-lib/desc@61205f6)          
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
-##  Github (r-lib/desc@c860e7b)          
-##  Github (r-lib/devtools@2765fbe)      
+##  Github (tidyverse/dplyr@55f4151)     
 ##  CRAN (R 3.6.0)                       
-##  Github (tidyverse/dplyr@7728876)     
-##  Github (r-lib/ellipsis@dc23a8c)      
 ##  Github (hadley/emo@02a5206)          
 ##  CRAN (R 3.6.0)                       
 ##  Github (brodieG/fansi@7a83a69)       
-##  local                                
-##  Github (r-lib/fs@380685c)            
 ##  CRAN (R 3.6.0)                       
-##  Github (tidyverse/ggplot2@23e3241)   
-##  Github (tidyverse/glue@71eeddf)      
+##  CRAN (R 3.6.0)                       
+##  CRAN (R 3.6.0)                       
+##  Github (tidyverse/ggplot2@115c396)   
+##  CRAN (R 3.6.0)                       
+##  CRAN (R 3.6.0)                       
+##  CRAN (R 3.6.0)                       
+##  CRAN (R 3.6.0)                       
+##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
@@ -631,8 +665,6 @@ devtools::session_info()
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.1)                       
-##  CRAN (R 3.6.0)                       
-##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
@@ -645,45 +677,44 @@ devtools::session_info()
 ##  CRAN (R 3.6.0)                       
 ##  Github (jeroen/openssl@62d7d8c)      
 ##  CRAN (R 3.6.0)                       
-##  CRAN (R 3.6.1)                       
-##  CRAN (R 3.6.1)                       
-##  CRAN (R 3.6.0)                       
-##  CRAN (R 3.6.0)                       
-##  CRAN (R 3.6.0)                       
-##  Github (r-lib/processx@8843706)      
-##  CRAN (R 3.6.0)                       
-##  CRAN (R 3.6.0)                       
-##  Github (tidyverse/purrr@9edf0ca)     
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
-##  CRAN (R 3.6.0)                       
-##  Github (r-lib/rlang@b1dfdd0)         
-##  CRAN (R 3.6.0)                       
+##  Github (r-lib/processx@4751c02)      
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
-##  CRAN (R 3.6.0)                       
-##  Github (r-lib/scales@7f6f4a5)        
+##  Github (tidyverse/purrr@a8ec903)     
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
+##  Github (r-lib/rlang@5d538c4)         
 ##  CRAN (R 3.6.0)                       
-##  Github (tidyverse/tidyr@4618116)     
-##  Github (tidyverse/tidyselect@04c52ad)
-##  Github (tidyverse/tidyverse@9a4cbe9) 
+##  CRAN (R 3.6.0)                       
+##  CRAN (R 3.6.0)                       
+##  CRAN (R 3.6.0)                       
+##  Github (r-lib/scales@e34a492)        
+##  CRAN (R 3.6.0)                       
+##  CRAN (R 3.6.0)                       
+##  CRAN (R 3.6.0)                       
+##  CRAN (R 3.6.0)                       
+##  CRAN (R 3.6.0)                       
+##  CRAN (R 3.6.0)                       
+##  Github (tidyverse/tidyr@db1478d)     
+##  Github (tidyverse/tidyselect@b450588)
+##  CRAN (R 3.6.0)                       
 ##  Github (hms-dbmi/UpSetR@572be88)     
-##  Github (r-lib/usethis@a2342b8)       
+##  Github (r-lib/usethis@e949cfc)       
 ##  CRAN (R 3.6.0)                       
-##  Github (r-lib/vctrs@f7d2492)         
+##  Github (r-lib/vctrs@d52169c)         
 ##  Github (r-lib/withr@07bfc68)         
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
-##  Github (r-lib/ymlthis@09b5c99)       
+##  Github (r-lib/ymlthis@f7631f4)       
 ##  CRAN (R 3.6.0)                       
 ## 
 ## [1] /Library/Frameworks/R.framework/Versions/3.6/Resources/library
