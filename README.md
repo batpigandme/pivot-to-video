@@ -1,6 +1,6 @@
 ---
 author: Mara Averick
-date: '2019-10-28'
+date: '2019-10-29'
 title: '📺 Pivot to Video'
 output:
   html_document:
@@ -178,7 +178,7 @@ UpSetR::upset(binary_df, nsets = 5, order.by = "freq")
 
 <img src="fig/basic-upset-1.png" width="1008" />
 
-## 🎬 I have seen this movie...
+## 🎦 I have seen this movie...
 
 Let's take a look at another dataset I collected with a quick survey, this one asking people whether they had or had not seen a given movie.
 
@@ -539,7 +539,7 @@ devtools::session_info()
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       America/New_York            
-##  date     2019-10-28                  
+##  date     2019-10-29                  
 ## 
 ## ─ Packages ──────────────────────────────────────────────────────────────
 ##  package      * version    date       lib
@@ -552,112 +552,110 @@ devtools::session_info()
 ##  cli            1.1.0      2019-03-19 [1]
 ##  colorspace     1.4-1      2019-03-18 [1]
 ##  corrr        * 0.4.0      2019-07-12 [1]
-##  crayon         1.3.4      2019-09-18 [1]
+##  crayon         1.3.4      2019-08-02 [1]
 ##  curl           4.2        2019-09-24 [1]
-##  desc           1.2.0      2019-10-28 [1]
+##  DBI            1.0.0      2018-05-02 [1]
+##  dbplyr         1.4.2      2019-06-17 [1]
+##  desc           1.2.0      2019-10-22 [1]
 ##  devtools       2.2.1      2019-09-24 [1]
-##  digest         0.6.21     2019-09-20 [1]
-##  dplyr        * 0.8.3.9000 2019-10-14 [1]
+##  digest         0.6.22     2019-10-21 [1]
+##  dplyr        * 0.8.3.9000 2019-10-17 [1]
 ##  ellipsis       0.3.0      2019-09-20 [1]
-##  emo            0.0.0.9000 2019-09-18 [1]
+##  emo            0.0.0.9000 2019-08-02 [1]
 ##  evaluate       0.14       2019-05-28 [1]
-##  fansi          0.4.0      2019-09-18 [1]
-##  forcats      * 0.4.0      2019-02-17 [1]
-##  fs             1.3.1      2019-05-06 [1]
+##  fansi          0.4.0      2019-08-02 [1]
+##  forcats      * 0.4.0.9000 2019-08-20 [1]
+##  fs             1.3.1.9000 2019-10-22 [1]
 ##  generics       0.0.2      2018-11-29 [1]
-##  ggplot2      * 3.2.1.9000 2019-10-14 [1]
-##  glue           1.3.1      2019-03-12 [1]
+##  ggplot2      * 3.2.1.9000 2019-10-17 [1]
+##  glue           1.3.1.9000 2019-09-12 [1]
 ##  googlesheets   0.3.0      2018-06-29 [1]
 ##  gridExtra      2.3        2017-09-09 [1]
 ##  gtable         0.3.0      2019-03-25 [1]
 ##  haven          2.1.1      2019-07-04 [1]
 ##  hms            0.5.1      2019-08-23 [1]
 ##  htmltools      0.4.0      2019-10-04 [1]
-##  httpuv         1.5.2      2019-09-11 [1]
 ##  httr           1.4.1      2019-08-05 [1]
 ##  janitor        1.2.0      2019-04-21 [1]
 ##  jsonlite       1.6        2018-12-07 [1]
 ##  knitr          1.25       2019-09-18 [1]
 ##  labeling       0.3        2014-08-23 [1]
-##  later          1.0.0      2019-10-04 [1]
 ##  lattice        0.20-38    2018-11-04 [1]
 ##  lifecycle      0.1.0      2019-08-01 [1]
-##  lubridate      1.7.4.9000 2019-09-18 [1]
+##  lubridate      1.7.4.9000 2019-10-22 [1]
 ##  magrittr       1.5        2014-11-22 [1]
 ##  memoise        1.1.0      2017-04-21 [1]
 ##  modelr         0.1.5      2019-08-08 [1]
 ##  munsell        0.5.0      2018-06-12 [1]
 ##  nlme           3.1-141    2019-08-01 [1]
-##  openssl        1.4.1.9000 2019-09-18 [1]
+##  openssl        1.4.1.9000 2019-09-13 [1]
 ##  pillar         1.4.2      2019-06-29 [1]
 ##  pkgbuild       1.0.6      2019-10-09 [1]
 ##  pkgconfig      2.0.3      2019-09-22 [1]
 ##  pkgload        1.0.2      2018-10-29 [1]
 ##  plyr           1.8.4      2016-06-08 [1]
 ##  prettyunits    1.0.2      2015-07-13 [1]
-##  processx       3.4.1.9000 2019-10-28 [1]
-##  promises       1.1.0      2019-10-04 [1]
+##  processx       3.4.1.9000 2019-10-17 [1]
 ##  ps             1.3.0      2018-12-21 [1]
-##  purrr        * 0.3.3.9000 2019-10-28 [1]
+##  purrr        * 0.3.3.9000 2019-10-21 [1]
 ##  R6             2.4.0      2019-02-14 [1]
 ##  Rcpp           1.0.2      2019-07-25 [1]
 ##  readr        * 1.3.1      2018-12-21 [1]
 ##  readxl         1.3.1      2019-03-13 [1]
 ##  remotes        2.1.0      2019-06-24 [1]
-##  rlang          0.4.1.9000 2019-10-28 [1]
+##  reprex         0.3.0      2019-05-16 [1]
+##  rlang          0.4.1      2019-10-22 [1]
 ##  rmarkdown      1.16       2019-10-01 [1]
 ##  rprojroot      1.3-2      2018-01-03 [1]
 ##  rstudioapi     0.10       2019-03-19 [1]
 ##  rvest          0.3.4      2019-05-15 [1]
-##  scales         1.0.0.9000 2019-10-28 [1]
+##  scales         1.0.0.9000 2019-08-02 [1]
 ##  sessioninfo    1.1.1      2018-11-05 [1]
 ##  snakecase      0.11.0     2019-05-25 [1]
 ##  stringi        1.4.3      2019-03-12 [1]
 ##  stringr      * 1.4.0      2019-02-10 [1]
 ##  testthat       2.2.1      2019-07-25 [1]
 ##  tibble       * 2.1.3      2019-06-06 [1]
-##  tidyr        * 1.0.0.9000 2019-10-15 [1]
-##  tidyselect     0.2.5.9000 2019-10-28 [1]
-##  tidyverse    * 1.2.1      2017-11-14 [1]
-##  UpSetR         1.4.0      2019-09-18 [1]
-##  usethis        1.5.1.9000 2019-10-28 [1]
+##  tidyr        * 1.0.0.9000 2019-10-17 [1]
+##  tidyselect     0.2.5.9000 2019-10-22 [1]
+##  tidyverse    * 1.2.1.9000 2019-10-08 [1]
+##  UpSetR         1.4.0      2019-09-09 [1]
+##  usethis        1.5.1.9000 2019-10-17 [1]
 ##  utf8           1.1.4      2018-05-24 [1]
-##  vctrs          0.2.0.9007 2019-10-28 [1]
-##  withr          2.1.2.9000 2019-09-18 [1]
+##  vctrs          0.2.0.9007 2019-10-22 [1]
+##  withr          2.1.2.9000 2019-09-09 [1]
 ##  xfun           0.10       2019-10-01 [1]
 ##  xml2           1.2.2      2019-08-09 [1]
 ##  yaml           2.2.0      2018-07-25 [1]
-##  ymlthis        0.1.0.9000 2019-10-28 [1]
+##  ymlthis        0.1.0.9000 2019-10-21 [1]
 ##  zeallot        0.1.0      2018-01-28 [1]
 ##  source                               
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
+##  CRAN (R 3.6.1)                       
 ##  CRAN (R 3.6.0)                       
-##  CRAN (R 3.6.0)                       
-##  CRAN (R 3.6.0)                       
+##  standard (@1.1.0)                    
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  Github (r-lib/crayon@84be620)        
 ##  CRAN (R 3.6.0)                       
+##  CRAN (R 3.6.0)                       
+##  CRAN (R 3.6.0)                       
 ##  Github (r-lib/desc@61205f6)          
 ##  CRAN (R 3.6.0)                       
-##  CRAN (R 3.6.0)                       
-##  Github (tidyverse/dplyr@55f4151)     
+##  CRAN (R 3.6.1)                       
+##  Github (tidyverse/dplyr@b4a3333)     
 ##  CRAN (R 3.6.0)                       
 ##  Github (hadley/emo@02a5206)          
 ##  CRAN (R 3.6.0)                       
 ##  Github (brodieG/fansi@7a83a69)       
-##  CRAN (R 3.6.0)                       
-##  CRAN (R 3.6.0)                       
+##  local                                
+##  Github (r-lib/fs@344ed21)            
 ##  CRAN (R 3.6.0)                       
 ##  Github (tidyverse/ggplot2@115c396)   
-##  CRAN (R 3.6.0)                       
-##  CRAN (R 3.6.0)                       
-##  CRAN (R 3.6.0)                       
-##  CRAN (R 3.6.0)                       
-##  CRAN (R 3.6.0)                       
+##  Github (tidyverse/glue@71eeddf)      
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
@@ -669,7 +667,9 @@ devtools::session_info()
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
-##  Github (tidyverse/lubridate@a95bbcd) 
+##  CRAN (R 3.6.0)                       
+##  CRAN (R 3.6.0)                       
+##  Github (tidyverse/lubridate@7666938) 
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
@@ -678,12 +678,11 @@ devtools::session_info()
 ##  Github (jeroen/openssl@62d7d8c)      
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
+##  CRAN (R 3.6.1)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
-##  CRAN (R 3.6.0)                       
-##  Github (r-lib/processx@4751c02)      
-##  CRAN (R 3.6.0)                       
+##  Github (r-lib/processx@70a4175)      
 ##  CRAN (R 3.6.0)                       
 ##  Github (tidyverse/purrr@a8ec903)     
 ##  CRAN (R 3.6.0)                       
@@ -691,12 +690,13 @@ devtools::session_info()
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
-##  Github (r-lib/rlang@5d538c4)         
+##  CRAN (R 3.6.0)                       
+##  Github (r-lib/rlang@e99dec3)         
+##  CRAN (R 3.6.1)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
-##  CRAN (R 3.6.0)                       
-##  Github (r-lib/scales@e34a492)        
+##  Github (r-lib/scales@7f6f4a5)        
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
@@ -704,14 +704,14 @@ devtools::session_info()
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  Github (tidyverse/tidyr@db1478d)     
-##  Github (tidyverse/tidyselect@b450588)
-##  CRAN (R 3.6.0)                       
+##  Github (tidyverse/tidyselect@c7fa4b8)
+##  Github (tidyverse/tidyverse@6271023) 
 ##  Github (hms-dbmi/UpSetR@572be88)     
-##  Github (r-lib/usethis@e949cfc)       
+##  local                                
 ##  CRAN (R 3.6.0)                       
-##  Github (r-lib/vctrs@d52169c)         
+##  Github (r-lib/vctrs@2cce0f8)         
 ##  Github (r-lib/withr@07bfc68)         
-##  CRAN (R 3.6.0)                       
+##  CRAN (R 3.6.1)                       
 ##  CRAN (R 3.6.0)                       
 ##  CRAN (R 3.6.0)                       
 ##  Github (r-lib/ymlthis@f7631f4)       
