@@ -43,6 +43,8 @@ raw_dat <- sheet %>%
 belcher_results <- tibble::rowid_to_column(raw_dat, "resp_id") %>%
   dplyr::rename("response" = `Members of the Belcher family with whom I identify (select all that apply)`) %>%
   dplyr::select(-Timestamp)
+
+belcher_results
 ```
 
 Because I used a [Google Form](https://docs.google.com/forms/d/e/1FAIpQLScYLAkzDzEOWvXrn601Vt79S6DsKLkv12NUsqbo72j1fmapWA/viewform) to collect this data, I don't have to worry about
